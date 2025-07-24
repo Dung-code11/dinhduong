@@ -1,0 +1,56 @@
+.login-page {
+  background-color: #fffaf3;
+  height: 100vh;
+}
+
+.header {
+  background-color: #232536;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.header .logo {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.login-card {
+  background: white;
+  width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.input-group label {
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn {
+  width: 100%;
+  background-color: #005f53;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
