@@ -1,0 +1,229 @@
+.login-page {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #ffffff, #f4fff8);
+  overflow: hidden;
+}
+
+/* Bên trái */
+.login-left {
+  flex: 1;
+  background: 
+    linear-gradient(to bottom right, rgba(0, 193, 106, 0.85), rgba(0, 124, 77, 0.85)),
+    url('../assets/bg-logo.jpg') center center / cover no-repeat;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.login-left .logo {
+  margin-bottom: 1.5rem;
+}
+
+.login-left h1 {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.login-left p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  max-width: 80%;
+}
+
+/* Bên phải */
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  animation: fadeInUp 0.8s ease forwards;
+  background-color: #f8fffb;
+}
+
+/* Card đăng nhập */
+.login-card {
+  background-color: #ffffff;
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.logologin {
+  display: block;
+  margin: 0 auto 1.5rem;
+  width: 70px;
+  height: auto;
+}
+
+.login-card h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.login-card p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #00b471;
+}
+
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #00b471;
+}
+
+/* Footer nhỏ: checkbox + quên mật khẩu */
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 0.85rem;
+  background: linear-gradient(to right, #00c16a, #009e5d);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-card button:hover {
+  background: linear-gradient(to right, #00b471, #008d52);
+}
+
+.divider {
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* Nút login bằng MXH */
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.social-btn {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  background: #f2f2f2;
+}
+
+.signup {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.signup a {
+  color: #00b471;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+}
+
+.copyright {
+  font-size: 0.75rem;
+  color: #999;
+  text-align: center;
+  margin-top: 2rem;
+  line-height: 1.4;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

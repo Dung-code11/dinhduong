@@ -2,6 +2,7 @@ package org.example.backend.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -63,4 +64,9 @@ public class JwtUtil {
             return false;
         }
     }
+    @PostConstruct
+    public void testConfig() {
+        System.out.println("✅ JWT_SECRET = " + jwtSecret);
+    }
+
 }

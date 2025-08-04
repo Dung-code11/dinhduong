@@ -1,6 +1,10 @@
 package org.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "customer")
@@ -10,12 +14,41 @@ public class Customer {
     private Long id;
 
     private String fullName;
+    private String sex;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dob;
     private String email;
     private String phone;
+    private String address;
+
 
     @OneToOne
     @JoinColumn(name = "userid", referencedColumnName = "idAccount")
     private User user;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
 
     public Long getId() {
         return id;

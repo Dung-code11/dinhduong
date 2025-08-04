@@ -44,8 +44,11 @@ public class CustomerService {
 
         Customer customer = new Customer();
         customer.setFullName(dto.getFullName());
+        customer.setSex(dto.getSex());
+        customer.setDob(dto.getDob());
         customer.setEmail(dto.getEmail());
         customer.setPhone(dto.getPhone());
+        customer.setAddress(dto.getAddress());
         customer.setUser(user);
         return customerRepository.save(customer);
     }
@@ -65,11 +68,20 @@ public class CustomerService {
         if (dto.getFullName() != null) {
             customer.setFullName(dto.getFullName());
         }
+        if(dto.getSex() != null) {
+            customer.setSex(dto.getSex());
+        }
+        if(dto.getDob() != null) {
+            customer.setDob(dto.getDob());
+        }
         if (dto.getEmail() != null) {
             customer.setEmail(dto.getEmail());
         }
         if (dto.getPhone() != null) {
             customer.setPhone(dto.getPhone());
+        }
+        if (dto.getAddress() != null) {
+            customer.setAddress(dto.getAddress());
         }
 
         return customerRepository.save(customer);
