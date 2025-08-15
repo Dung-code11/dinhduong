@@ -1,0 +1,356 @@
+:root {
+  --color-background: #f9f4f2;
+  --color-surface: #ffffff;
+  --color-text-primary: #272932;
+  --color-text-secondary: #8a8c90;
+  --color-text-tertiary: #52545b;
+  --color-primary: #c2e66e;
+  --color-secondary: #ffcb65;
+  --color-tertiary: #ffa257;
+  --color-neutral-light: #eeeeef;
+  --color-neutral-dark: #e1e1e2;
+  --color-border: #e1e1e2;
+
+  /* Badge colors */
+  --badge-ngucoc: #facc15;
+  --badge-khoaicu: #fbbf24;
+  --badge-hat: #f59e0b;
+  --badge-raucu: #4ade80;
+  --badge-quachin: #f97316;
+  --badge-dau: #fde047;
+  --badge-thit: #f87171;
+  --badge-thuysan: #60a5fa;
+  --badge-trung: #fcd34d;
+  --badge-sua: #a78bfa;
+  --badge-dohop: #fb7185;
+  --badge-dongot: #fda4af;
+  --badge-gia_vi: #d1d5db;
+  --badge-nuocgiaikhat: #38bdf8;
+  --badge-truyenthong: #86efac;
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+.siteHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto 1rem;
+  padding: 10px;
+}
+.siteTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+.userControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.iconButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  border: none;
+  cursor: pointer;
+}
+.notificationBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-tertiary);
+  border-radius: 50%;
+}
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+}
+.userRole {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+/* CONTROLS */
+.widgetControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* canh giữa theo chiều dọc */
+  max-width: 1200px;
+  margin: 0 auto 1rem;
+  gap: 12px;
+  flex-wrap: nowrap; /* không để xuống hàng */
+}
+.controlsLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.controlsRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.searchInput {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-neutral-light);
+  padding: 6px 10px;
+  border-radius: 8px;
+  height: 38px; /* đồng bộ chiều cao với button */
+}
+
+.searchInput input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+}
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  height: 38px; /* đồng bộ chiều cao */
+  line-height: 1;
+}
+.btnPrimary {
+  background-color: var(--color-primary);
+}
+
+.btnSecondary {
+  background-color: var(--color-neutral-light);
+}
+.iconSm {
+  width: 14px;
+  height: 14px;
+}
+/* FILTER MENU (gộp 2 lần khai báo) */
+.filterWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filterWrapper > button {
+  height: 38px; /* đồng bộ chiều cao */
+  padding: 0 14px;
+  background: var(--color-neutral-light);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.filterMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 12px 16px;
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+  min-width: 260px;
+}
+
+.filterGroup {
+  margin-bottom: 12px;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.filterOptions {
+  padding-left: 20px;
+}
+
+.filterOptions label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.filterOptions input[type="checkbox"] {
+  transform: scale(1.1);
+}
+
+.filterOptions label:hover {
+  color: var(--color-primary);
+}
+/* TABLE */
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.foodTable {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+.tableRow {
+  display: table-row;
+}
+.tableRow:hover {
+  background-color: #fff7ed;
+}
+.tableCell {
+  display: table-cell;
+  padding: 8px 10px;
+  min-width: 140px;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.tableHeader .tableCell {
+  font-weight: 600;
+  text-align: center;
+  background: linear-gradient(to right, #fef3c7, #fde68a);
+  border-bottom: 2px solid #fcd34d;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.stickyCol {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: var(--color-surface);
+  box-shadow: inset -1px 0 0 var(--color-border);
+}
+
+/* BADGE */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.ngucoc { background-color: var(--badge-ngucoc); }
+.khoaicu { background-color: var(--badge-khoaicu); }
+.hat { background-color: var(--badge-hat); }
+.raucu { background-color: var(--badge-raucu); }
+.quachin { background-color: var(--badge-quachin); }
+.dau { background-color: var(--badge-dau); }
+.thit { background-color: var(--badge-thit); }
+.thuysan { background-color: var(--badge-thuysan); }
+.trung { background-color: var(--badge-trung); }
+.sua { background-color: var(--badge-sua); }
+.dohop { background-color: var(--badge-dohop); }
+.dongot { background-color: var(--badge-dongot); }
+.gia_vi { background-color: var(--badge-gia_vi); }
+.nuocgiaikhat { background-color: var(--badge-nuocgiaikhat); }
+.truyenthong { background-color: var(--badge-truyenthong); }
+
+/* Icon trước badge */
+.ngucoc::before { content: "🌾 "; }
+.khoaicu::before { content: "🥔 "; }
+.hat::before { content: "🥜 "; }
+.raucu::before { content: "🥬 "; }
+.quachin::before { content: "🍎 "; }
+.dau::before { content: "🧈 "; }
+.thit::before { content: "🥩 "; }
+.thuysan::before { content: "🐟 "; }
+.trung::before { content: "🥚 "; }
+.sua::before { content: "🥛 "; }
+.dohop::before { content: "🥫 "; }
+.dongot::before { content: "🍬 "; }
+.gia_vi::before { content: "🧂 "; }
+.nuocgiaikhat::before { content: "🥤 "; }
+.truyenthong::before { content: "🍲 "; }
+
+/* MODAL */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.modal {
+  background: var(--color-surface);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+}
+.modal h3 {
+  margin-top: 0;
+  color: #2c7a7b;
+}
+.modal ul {
+  padding-left: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.modal button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #2c7a7b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
