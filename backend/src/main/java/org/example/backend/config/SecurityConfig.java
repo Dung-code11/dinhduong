@@ -1,5 +1,7 @@
 package org.example.backend.config;
 
+import org.example.backend.security.OAuth2AuthenticationSuccessHandler;
+import org.example.backend.service.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,21 +32,40 @@ import java.util.Arrays;
 public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
-    @Autowired private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
+
+    @Autowired
+    private OAuth2AuthenticationSuccessHandler oauth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(req -> req
+                        .requestMatchers(
+                                "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+                                "/api/auth/**",
+                                "/oauth2/**"               // <--- Mở quyền cho OAuth2
+                        ).permitAll()
                         .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/customer/**").permitAll()
-                        .requestMatchers("/api/staff/**").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/user/**").permitAll()
+                        .requestMatchers("/api/userpro/**").hasAnyRole("SUPERADMIN","ADMIN", "USERPRO")
+                        .requestMatchers("/api/admin/**").hasAnyRole("SUPERADMIN","ADMIN")
+                        .requestMatchers("/api/superadmin/**").hasAuthority("SUPERADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Thêm cấu hình OAuth2 Login
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .successHandler(oauth2SuccessHandler) // Nếu muốn sinh JWT ngay sau login OAuth2
+                )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -69,20 +90,6 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        .allowedOrigins("http://localhost:5173")
-//                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                        .allowedHeaders("*")
-//                        .allowCredentials(true); // nếu có gửi cookie hoặc token
-//            }
-//        };
-//    }
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -94,17 +101,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        .allowedOrigins("http://localhost:5173") // React chạy ở port này
-//                        .allowedMethods("*")
-//                        .allowedHeaders("*")
-//                        .allowCredentials(true);
-//            }
-//        };
-//   }
 }

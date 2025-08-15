@@ -3,26 +3,26 @@ package org.example.backend.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "nguoi_dung")
 public class User {
 
     @Id
-    @Column(name = "idAccount", length = 10, nullable = false, unique = true)
+    @Column(name = "id", length = 10, nullable = false, unique = true)
     private String id;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(name = "ten_dang_nhap", nullable = false, length = 100, unique = true)
     private String username;
 
-    @Column(name = "password", length = 100, nullable = false)
+    @Column(name = "mat_khau", length = 100, nullable = false)
     private String password;
 
-    @Column(name = "role", length = 50, nullable = false)
+    @Column(name = "vai_tro", length = 50, nullable = false)
     private String role;
 
-    @Column(name = "provider")
+    @Column(name = "kenh")
     private String provider;
 
-    @Column(name = "provider_id")
+    @Column(name = "id_kenh")
     private String providerId;
 
 //    private String provider;      // "local", "google", "facebook"
