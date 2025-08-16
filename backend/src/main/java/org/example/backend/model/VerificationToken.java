@@ -11,14 +11,14 @@ public class VerificationToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 64)
+    @Column(name = "ma_token",nullable = false, unique = true, length = 64)
     private String token;
 
     @OneToOne
     @JoinColumn(name = "nguoi_dung_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
+    @Column(name = "ngay_het_han",nullable = false)
     private LocalDateTime expiryDate;
 
     public VerificationToken(){}

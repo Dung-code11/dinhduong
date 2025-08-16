@@ -59,13 +59,13 @@ public class ProfileDTO {
         this.email = email;
     }
 
-    public Boolean getConfirmed() {
-        return isConfirmed;
-    }
-
-    public void setConfirmed(Boolean confirmed) {
-        isConfirmed = confirmed;
-    }
+//    public Boolean getConfirmed() {
+//        return isConfirmed;
+//    }
+//
+//    public void setConfirmed(Boolean confirmed) {
+//        isConfirmed = confirmed;
+//    }
 
     public Integer getTotalScore() {
         return totalScore;
