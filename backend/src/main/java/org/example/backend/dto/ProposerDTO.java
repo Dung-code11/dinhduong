@@ -1,5 +1,7 @@
 package org.example.backend.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.example.backend.model.Proposer;
 
@@ -10,7 +12,9 @@ public class ProposerDTO {
     private String unit;
     private String position;
     private String field;
-    private int phoneNumber;
+    @NotBlank(message = "Số điện thoại không được để trống")
+    @Pattern(regexp = "(84|0[3|5|7|8|9])+([0-9]{8})\\b", message = "Số điện thoại không hợp lệ")
+    private String phoneNumber;
     private Proposer.Trangthai status;
 
     public String getEducation() {
@@ -53,11 +57,11 @@ public class ProposerDTO {
         this.field = field;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

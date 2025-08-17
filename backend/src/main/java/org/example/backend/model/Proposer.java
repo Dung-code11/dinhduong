@@ -25,10 +25,10 @@ public class Proposer {
     private String field;
 
     @Column(name = "so_dien_thoai",length = 10)
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "Trang_thai_ho_so", columnDefinition = "ENUM('USER','USERPRO','ADMIN','SUPERADMIN')")
+    @Column(name = "trang_thai_ho_so", columnDefinition = "ENUM('CHO_DUYET','DA_DUYET','TU_CHOI')")
     private Trangthai status;
 
     @OneToOne
@@ -36,7 +36,7 @@ public class Proposer {
     private User user;
 
     public enum Trangthai{
-        USER,USERPRO,ADMIN,SUPERADMIN
+        CHO_DUYET,DA_DUYET,TU_CHOI
     }
 
     public Long getId() {
@@ -87,11 +87,11 @@ public class Proposer {
         this.field = field;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
