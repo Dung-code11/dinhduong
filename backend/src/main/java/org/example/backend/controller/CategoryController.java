@@ -15,19 +15,19 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/insert")
+    @PostMapping("/")
     public ResponseEntity<?> insert(@RequestBody CategoryDTO categoryDTO){
         Category category = categoryService.insert(categoryDTO);
         return ResponseEntity.ok("Thêm thành công "+category);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
         Category category = categoryService.update(id, categoryDTO);
         return ResponseEntity.ok("Sửa thành công "+category);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<Category>> findAll() {
         return ResponseEntity.ok(categoryService.findAll());
     }
@@ -37,7 +37,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.findById(id));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         categoryService.delete(id);
         return ResponseEntity.ok("Xóa thành công category id: " + id);
