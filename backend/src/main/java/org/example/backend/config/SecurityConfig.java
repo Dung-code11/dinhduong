@@ -1,5 +1,6 @@
 package org.example.backend.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.example.backend.security.OAuth2AuthenticationSuccessHandler;
 import org.example.backend.service.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,14 +58,20 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/**").permitAll()
                         .requestMatchers("/api/userpro/**").hasAnyRole("SUPERADMIN","ADMIN", "USERPRO")
                         .requestMatchers("/api/admin/**").hasAnyRole("SUPERADMIN","ADMIN")
-                        .requestMatchers("/api/superadmin/**").hasAuthority("SUPERADMIN")
+                        .requestMatchers("/api/superadmin/**").hasRole("SUPERADMIN")
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setContentType("application/json;charset=UTF-8");
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getWriter().write("{\"error\": \"Unauthorized or invalid token\"}");
+                        })
+                )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Thêm cấu hình OAuth2 Login
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-                        .successHandler(oauth2SuccessHandler) // Nếu muốn sinh JWT ngay sau login OAuth2
+                        .successHandler(oauth2SuccessHandler)
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
