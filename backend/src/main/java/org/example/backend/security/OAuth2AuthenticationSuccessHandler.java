@@ -4,6 +4,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.backend.model.User;
+import org.example.backend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +17,8 @@ import java.io.IOException;
 
 @Component
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    @Autowired
+    private UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
@@ -33,8 +38,11 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với username = " + username));
+
         // Sinh JWT
-        String token = jwtUtil.generateToken(userDetails);
+        String token = jwtUtil.generateToken(userDetails,user.getId());
 
         // Trả JSON về frontend
         response.setContentType("application/json");

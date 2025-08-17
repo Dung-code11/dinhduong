@@ -5,6 +5,7 @@ import org.example.backend.model.Proposer;
 import org.example.backend.model.User;
 import org.example.backend.repository.ProposerRepisitory;
 import org.example.backend.repository.UserRepository;
+import org.example.backend.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +17,14 @@ public class ProposerService {
     private ProposerRepisitory proposerRepisitory;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    public Proposer insert(ProposerDTO proposerDTO){
+    public Proposer insert(ProposerDTO proposerDTO,String token){
         Proposer proposer = new Proposer();
-        User user = userRepository.findById(proposerDTO.getUserId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id = " + proposerDTO.getUserId()));
+        String userId = jwtUtil.getUserIdFromToken(token);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id = " + userId));
         proposer.setEducation(proposerDTO.getEducation());
         proposer.setMajor(proposerDTO.getMajor());
         proposer.setUnit(proposerDTO.getUnit());

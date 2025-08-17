@@ -18,10 +18,13 @@ public class ProposerController {
     private ProposerService proposerService;
 
     @PostMapping("/")
-    public ResponseEntity<?> insert(@RequestBody @Valid ProposerDTO proposerDTO){
-        Proposer proposer = proposerService.insert(proposerDTO);
-        return ResponseEntity.ok("Thêm thành công " + proposer);
+    public ResponseEntity<?> insert(@RequestBody ProposerDTO proposerDTO,
+                                    @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        proposerService.insert(proposerDTO, token);
+        return ResponseEntity.ok("Thêm Proposer thành công");
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProposerDTO proposerDTO) {
@@ -30,7 +33,7 @@ public class ProposerController {
     }
 
     @PreAuthorize("hasRole('ADMIN') && hasRole('SUPERADMIN')")
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> adminUpdate(@PathVariable Long id, @RequestBody ProposerDTO proposerDTO) {
         Proposer proposer = proposerService.adminUpdate(id,proposerDTO);
         return ResponseEntity.ok("Sửa thành công "+ proposer);

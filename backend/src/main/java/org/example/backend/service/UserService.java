@@ -56,7 +56,7 @@ public class UserService {
                     new UsernamePasswordAuthenticationToken(username, password)
             );
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
-            return jwtUtil.generateToken(userDetails);
+            return jwtUtil.generateToken(userDetails, user.getId());
         } catch (BadCredentialsException e) {
             System.out.println(">>> Sai mật khẩu hoặc tài khoản không tồn tại");
             throw new RuntimeException("Sai thông tin đăng nhập");

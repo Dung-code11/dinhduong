@@ -29,11 +29,12 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails,String userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
+        claims.put("userId", userId);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
@@ -50,6 +51,15 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public String getUserIdFromToken(String token) {
+        return (String) Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userId");
     }
 
     public boolean validateToken(String token) {
