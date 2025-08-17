@@ -4,6 +4,7 @@ import org.example.backend.dto.ProposerDTO;
 import org.example.backend.model.Proposer;
 import org.example.backend.model.User;
 import org.example.backend.repository.ProposerRepisitory;
+import org.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,13 @@ import java.util.List;
 public class ProposerService {
     @Autowired
     private ProposerRepisitory proposerRepisitory;
+    @Autowired
+    private UserRepository userRepository;
 
     public Proposer insert(ProposerDTO proposerDTO){
         Proposer proposer = new Proposer();
-        User user = new User();
+        User user = userRepository.findById(proposerDTO.getUserId())
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id = " + proposerDTO.getUserId()));
         proposer.setEducation(proposerDTO.getEducation());
         proposer.setMajor(proposerDTO.getMajor());
         proposer.setUnit(proposerDTO.getUnit());

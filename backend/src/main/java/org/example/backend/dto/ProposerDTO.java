@@ -16,7 +16,7 @@ public class ProposerDTO {
     @Pattern(regexp = "(84|0[3|5|7|8|9])+([0-9]{8})\\b", message = "Số điện thoại không hợp lệ")
     private String phoneNumber;
     private Proposer.Trangthai status;
-
+    private String userId;
     public String getEducation() {
         return education;
     }
@@ -73,4 +73,11 @@ public class ProposerDTO {
         this.status = status;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
