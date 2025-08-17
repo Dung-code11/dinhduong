@@ -32,7 +32,7 @@ public class ProposerController {
         return ResponseEntity.ok("Sửa thành công "+ proposer);
     }
 
-    @PreAuthorize("hasRole('ADMIN') && hasRole('SUPERADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PatchMapping("/{id}")
     public ResponseEntity<?> adminUpdate(@PathVariable Long id, @RequestBody ProposerDTO proposerDTO) {
         Proposer proposer = proposerService.adminUpdate(id,proposerDTO);
