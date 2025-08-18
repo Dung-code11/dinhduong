@@ -10,8 +10,11 @@ import org.example.backend.security.JwtUtil;
 import org.example.backend.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.example.backend.service.UserService;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -69,5 +72,21 @@ public class AuthController {
         return "Tài khoản đã được xác thực thành công. Bạn có thể đăng nhập.";
     }
 
+    @RestController
+    @RequestMapping("/api/auth")
+    public class GoogleAuthController {
+
+        @GetMapping("/google-success")
+        public String success(OAuth2AuthenticationToken authentication) {
+            Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
+            String email = (String) attributes.get("email");
+            String name = (String) attributes.get("name");
+
+            // Nếu user chưa tồn tại -> tạo mới
+            // Nếu đã có -> trả JWT hoặc session
+
+            return "Đăng nhập thành công với email: " + email + ", tên: " + name;
+        }
+    }
 
 }

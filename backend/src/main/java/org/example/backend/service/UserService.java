@@ -1,7 +1,9 @@
 package org.example.backend.service;
 
 import org.example.backend.dto.UserDTO;
+import org.example.backend.model.Profile;
 import org.example.backend.model.User;
+import org.example.backend.repository.ProfileRepository;
 import org.example.backend.repository.UserRepository;
 import org.example.backend.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public void register(UserDTO userDTO) {
         if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
@@ -41,22 +45,21 @@ public class UserService {
 
     public String login(String username, String password) {
         try {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
+            Profile profile = profileRepository.findByUser(user)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy profile"));
+            if (!profile.getConfirmed()) {
+                throw new RuntimeException("Tài khoản chưa được xác thực, vui lòng kiểm tra email");
+            }
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
-
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
-            return jwtUtil.generateToken(userDetails);
-
+            return jwtUtil.generateToken(userDetails, user.getId());
         } catch (BadCredentialsException e) {
             System.out.println(">>> Sai mật khẩu hoặc tài khoản không tồn tại");
             throw new RuntimeException("Sai thông tin đăng nhập");
-        } catch (Exception e) {
-            System.out.println(">>> Lỗi khác: " + e.getMessage());
-            throw new RuntimeException("Lỗi đăng nhập");
         }
     }
-
-
-
 }

@@ -42,6 +42,7 @@ public class ProfileService {
         }
         User user = new User();
         user.setId(UUID.randomUUID().toString().substring(0, 10));
+        System.out.print("id: "+user.getId());
         user.setUsername(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setRole("USER");
@@ -59,12 +60,14 @@ public class ProfileService {
         profile.setTotalScore(0);
         profile.setUser(user);
 
+        Profile savedProfile = profileRepository.save(profile);
+
         String verificationToken = UUID.randomUUID().toString();
         VerificationToken tokenEntity = new VerificationToken(verificationToken, user);
         verificationTokenRepository.save(tokenEntity);
         sendVerificationEmail(user.getUsername(), verificationToken);
 
-        return profileRepository.save(profile);
+        return savedProfile;
     }
 
     private void sendVerificationEmail(String toEmail, String token) {
