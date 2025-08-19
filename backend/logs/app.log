@@ -1,0 +1,254 @@
+2025-08-19 20:32:28 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-08-19 20:32:28 INFO  [restartedMain] o.example.backend.BackendApplication - Starting BackendApplication using Java 21.0.8 with PID 7992 (D:\dinhduong\backend\target\classes started by QUYNH in D:\dinhduong\backend)
+2025-08-19 20:32:28 INFO  [restartedMain] o.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-19 20:32:28 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-08-19 20:32:28 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-08-19 20:32:31 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-19 20:32:31 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 126 ms. Found 6 JPA repository interfaces.
+2025-08-19 20:32:33 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-08-19 20:32:33 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-08-19 20:32:33 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-19 20:32:33 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2025-08-19 20:32:33 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-19 20:32:33 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5322 ms
+2025-08-19 20:32:34 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-08-19 20:32:34 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-19 20:32:35 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-19 20:32:35 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-19 20:32:36 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7a84bce3
+2025-08-19 20:32:36 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-19 20:32:36 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-19 20:32:36 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-08-19 20:32:38 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-19 20:32:38 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 20:32:40 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-19 20:32:42 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@60463d0a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4433dce4, org.springframework.security.web.context.SecurityContextHolderFilter@5240775b, org.springframework.security.web.header.HeaderWriterFilter@4858df6f, org.springframework.web.filter.CorsFilter@6c6feefc, org.springframework.security.web.authentication.logout.LogoutFilter@1f094587, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7b5fcd79, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@1f377cca, org.example.backend.security.JwtFilter@240b195d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@15e377d7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@57e48b1b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@9fd9d95, org.springframework.security.web.session.SessionManagementFilter@51964176, org.springframework.security.web.access.ExceptionTranslationFilter@15af73b0, org.springframework.security.web.access.intercept.AuthorizationFilter@35809cc7]
+2025-08-19 20:32:43 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-08-19 20:32:43 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-08-19 20:32:43 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2025-08-19 20:32:43 INFO  [restartedMain] o.example.backend.BackendApplication - Started BackendApplication in 16.279 seconds (process running for 17.584)
+2025-08-19 20:32:45 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 20:32:45 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-19 20:32:45 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-08-19 20:33:05 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-08-19 20:33:05 INFO  [restartedMain] o.example.backend.BackendApplication - Starting BackendApplication using Java 21.0.8 with PID 212 (D:\dinhduong\backend\target\classes started by QUYNH in D:\dinhduong\backend)
+2025-08-19 20:33:05 INFO  [restartedMain] o.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-19 20:33:05 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-08-19 20:33:05 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-08-19 20:33:08 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-19 20:33:08 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 113 ms. Found 6 JPA repository interfaces.
+2025-08-19 20:33:10 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-08-19 20:33:10 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-08-19 20:33:10 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-19 20:33:10 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2025-08-19 20:33:10 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-19 20:33:10 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4370 ms
+2025-08-19 20:33:10 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-08-19 20:33:10 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-19 20:33:11 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-19 20:33:11 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-19 20:33:12 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1cd3254e
+2025-08-19 20:33:12 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-19 20:33:12 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-19 20:33:12 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-08-19 20:33:15 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-19 20:33:15 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 20:33:17 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-19 20:33:18 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3255c247, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@20ddbd34, org.springframework.security.web.context.SecurityContextHolderFilter@15993b0f, org.springframework.security.web.header.HeaderWriterFilter@c90781a, org.springframework.web.filter.CorsFilter@2a97647a, org.springframework.security.web.authentication.logout.LogoutFilter@39144322, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@18ca756f, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@1300234a, org.example.backend.security.JwtFilter@3236ea1e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2a3350be, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6d82296d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74ba2708, org.springframework.security.web.session.SessionManagementFilter@19123691, org.springframework.security.web.access.ExceptionTranslationFilter@78a5ee2c, org.springframework.security.web.access.intercept.AuthorizationFilter@1a687b8a]
+2025-08-19 20:33:19 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-08-19 20:33:19 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-08-19 20:33:19 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2025-08-19 20:33:19 INFO  [restartedMain] o.example.backend.BackendApplication - Started BackendApplication in 14.504 seconds (process running for 16.049)
+2025-08-19 20:33:22 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 20:33:22 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-19 20:33:22 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+INFO  | 2025-08-19 20:52:26 | [background-preinit] <clinit> o.h.v.i.u.Version (Version.java:<clinit>:21INFO  | 2025-08-19 20:52:26 | [restartedMain] logStarting o.s.b.StartupInfoLogger (StartupInfoLogger.java:logStarting:50INFO  | 2025-08-19 20:52:26 | [restartedMain] logStartupProfileInfo o.s.b.SpringApplication (SpringApplication.java:logStartupProfileInfo:654INFO  | 2025-08-19 20:52:27 | [restartedMain] logTo o.s.b.l.DeferredLog (DeferredLog.java:logTo:252INFO  | 2025-08-19 20:52:27 | [restartedMain] logTo o.s.b.l.DeferredLog (DeferredLog.java:logTo:252INFO  | 2025-08-19 20:52:31 | [restartedMain] registerRepositoriesIn o.s.d.r.c.RepositoryConfigurationDelegate (RepositoryConfigurationDelegate.java:registerRepositoriesIn:143INFO  | 2025-08-19 20:52:31 | [restartedMain] registerRepositoriesIn o.s.d.r.c.RepositoryConfigurationDelegate (RepositoryConfigurationDelegate.java:registerRepositoriesIn:211INFO  | 2025-08-19 20:52:35 | [restartedMain] initialize o.s.b.w.e.t.TomcatWebServer (TomcatWebServer.java:initialize:109INFO  | 2025-08-19 20:52:35 | [restartedMain] log o.a.j.l.DirectJDKLog (DirectJDKLog.java:log:173INFO  | 2025-08-19 20:52:35 | [restartedMain] log o.a.j.l.DirectJDKLog (DirectJDKLog.java:log:173INFO  | 2025-08-19 20:52:35 | [restartedMain] log o.a.j.l.DirectJDKLog (DirectJDKLog.java:log:173INFO  | 2025-08-19 20:52:36 | [restartedMain] log o.a.j.l.DirectJDKLog (DirectJDKLog.java:log:173INFO  | 2025-08-19 20:52:36 | [restartedMain] prepareWebApplicationContext o.s.b.w.s.c.ServletWebServerApplicationContext (ServletWebServerApplicationContext.java:prepareWebApplicationContext:296INFO  | 2025-08-19 20:52:38 | [restartedMain] logVersion o.h.Version (Version.java:logVersion:44INFO  | 2025-08-19 20:52:38 | [restartedMain] initiateService o.h.c.i.RegionFactoryInitiator (RegionFactoryInitiator.java:initiateService:50INFO  | 2025-08-19 20:52:40 | [restartedMain] addTransformer o.s.o.j.p.SpringPersistenceUnitInfo (SpringPersistenceUnitInfo.java:addTransformer:87INFO  | 2025-08-19 20:52:40 | [restartedMain] getConnection c.z.h.HikariDataSource (HikariDataSource.java:getConnection:110INFO  | 2025-08-19 20:52:41 | [restartedMain] checkFailFast c.z.h.p.HikariPool (HikariPool.java:checkFailFast:565INFO  | 2025-08-19 20:52:41 | [restartedMain] getConnection c.z.h.HikariDataSource (HikariDataSource.java:getConnection:123WARN  | 2025-08-19 20:52:41 | [restartedMain] constructDialect o.h.e.j.d.i.DialectFactoryImpl (DialectFactoryImpl.java:constructDialect:153WARN  | 2025-08-19 20:52:41 | [restartedMain] logSelectedDialect o.h.e.j.d.i.DialectFactoryImpl (DialectFactoryImpl.java:logSelectedDialect:101INFO  | 2025-08-19 20:52:46 | [restartedMain] initiateService o.h.e.t.j.p.i.JtaPlatformInitiator (JtaPlatformInitiator.java:initiateService:58INFO  | 2025-08-19 20:52:46 | [restartedMain] buildNativeEntityManagerFactory o.s.o.j.AbstractEntityManagerFactoryBean (AbstractEntityManagerFactoryBean.java:buildNativeEntityManagerFactory:437WARN  | 2025-08-19 20:52:50 | [restartedMain] openEntityManagerInViewInterceptor o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration (JpaBaseConfiguration.java:openEntityManagerInViewInterceptor:232INFO  | 2025-08-19 20:52:52 | [restartedMain] <init> o.s.s.w.DefaultSecurityFilterChain (DefaultSecurityFilterChain.java:<init>:54INFO  | 2025-08-19 20:52:54 | [restartedMain] startServer o.s.b.d.a.OptionalLiveReloadServer (OptionalLiveReloadServer.java:startServer:59INFO  | 2025-08-19 20:52:54 | [restartedMain] log o.a.j.l.DirectJDKLog (DirectJDKLog.java:log:173INFO  | 2025-08-19 20:52:54 | [restartedMain] start o.s.b.w.e.t.TomcatWebServer (TomcatWebServer.java:start:241INFO  | 2025-08-19 20:52:54 | [restartedMain] logStarted o.s.b.StartupInfoLogger (StartupInfoLogger.java:logStarted:56INFO  | 2025-08-19 20:53:01 | [SpringApplicationShutdownHook] destroy o.s.o.j.AbstractEntityManagerFactoryBean (AbstractEntityManagerFactoryBean.java:destroy:650INFO  | 2025-08-19 20:53:01 | [SpringApplicationShutdownHook] close c.z.h.HikariDataSource (HikariDataSource.java:close:350INFO  | 2025-08-19 20:53:01 | [SpringApplicationShutdownHook] close c.z.h.HikariDataSource (HikariDataSource.java:close:352INFO  | 2025-08-19 20:55:02 | [background-preinit] o.h.v.i.u.Version.<clinit>:21 - HV000001: Hibernate Validator 8.0.1.Final
+INFO  | 2025-08-19 20:55:02 | [restartedMain] o.s.b.StartupInfoLogger.logStarting:50 - Starting BackendApplication using Java 21.0.8 with PID 10568 (D:\dinhduong\backend\target\classes started by QUYNH in D:\dinhduong\backend)
+INFO  | 2025-08-19 20:55:02 | [restartedMain] o.s.b.SpringApplication.logStartupProfileInfo:654 - No active profile set, falling back to 1 default profile: "default"
+INFO  | 2025-08-19 20:55:02 | [restartedMain] o.s.b.l.DeferredLog.logTo:252 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+INFO  | 2025-08-19 20:55:02 | [restartedMain] o.s.b.l.DeferredLog.logTo:252 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+INFO  | 2025-08-19 20:55:05 | [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn:143 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+INFO  | 2025-08-19 20:55:06 | [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn:211 - Finished Spring Data repository scanning in 110 ms. Found 6 JPA repository interfaces.
+INFO  | 2025-08-19 20:55:08 | [restartedMain] o.s.b.w.e.t.TomcatWebServer.initialize:109 - Tomcat initialized with port 8080 (http)
+INFO  | 2025-08-19 20:55:08 | [restartedMain] o.a.j.l.DirectJDKLog.log:173 - Initializing ProtocolHandler ["http-nio-8080"]
+INFO  | 2025-08-19 20:55:08 | [restartedMain] o.a.j.l.DirectJDKLog.log:173 - Starting service [Tomcat]
+INFO  | 2025-08-19 20:55:08 | [restartedMain] o.a.j.l.DirectJDKLog.log:173 - Starting Servlet engine: [Apache Tomcat/10.1.20]
+INFO  | 2025-08-19 20:55:08 | [restartedMain] o.a.j.l.DirectJDKLog.log:173 - Initializing Spring embedded WebApplicationContext
+INFO  | 2025-08-19 20:55:08 | [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext:296 - Root WebApplicationContext: initialization completed in 5300 ms
+INFO  | 2025-08-19 20:55:09 | [restartedMain] o.h.Version.logVersion:44 - HHH000412: Hibernate ORM core version 6.4.4.Final
+INFO  | 2025-08-19 20:55:09 | [restartedMain] o.h.c.i.RegionFactoryInitiator.initiateService:50 - HHH000026: Second-level cache disabled
+INFO  | 2025-08-19 20:55:09 | [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo.addTransformer:87 - No LoadTimeWeaver setup: ignoring JPA class transformer
+INFO  | 2025-08-19 20:55:09 | [restartedMain] c.z.h.HikariDataSource.getConnection:110 - HikariPool-1 - Starting...
+INFO  | 2025-08-19 20:55:10 | [restartedMain] c.z.h.p.HikariPool.checkFailFast:565 - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12fb39e2
+INFO  | 2025-08-19 20:55:10 | [restartedMain] c.z.h.HikariDataSource.getConnection:123 - HikariPool-1 - Start completed.
+WARN  | 2025-08-19 20:55:10 | [restartedMain] o.h.e.j.d.i.DialectFactoryImpl.constructDialect:153 - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+WARN  | 2025-08-19 20:55:10 | [restartedMain] o.h.e.j.d.i.DialectFactoryImpl.logSelectedDialect:101 - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+INFO  | 2025-08-19 20:55:13 | [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService:58 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+INFO  | 2025-08-19 20:55:13 | [restartedMain] o.s.o.j.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+WARN  | 2025-08-19 20:55:15 | [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor:232 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+INFO  | 2025-08-19 20:55:16 | [restartedMain] o.s.s.w.DefaultSecurityFilterChain.<init>:54 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@442ec592, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@b6bf8d6, org.springframework.security.web.context.SecurityContextHolderFilter@3549c0d4, org.springframework.security.web.header.HeaderWriterFilter@3d76994, org.springframework.web.filter.CorsFilter@244a8e45, org.springframework.security.web.authentication.logout.LogoutFilter@2777b05c, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7ae4c9fe, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@65f55fee, org.example.backend.security.JwtFilter@4189e3ae, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f0fe209, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@505f732d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@349aa23, org.springframework.security.web.session.SessionManagementFilter@879efca, org.springframework.security.web.access.ExceptionTranslationFilter@5a392939, org.springframework.security.web.access.intercept.AuthorizationFilter@5f3437f4]
+INFO  | 2025-08-19 20:55:16 | [restartedMain] o.s.b.d.a.OptionalLiveReloadServer.startServer:59 - LiveReload server is running on port 35729
+INFO  | 2025-08-19 20:55:16 | [restartedMain] o.a.j.l.DirectJDKLog.log:173 - Starting ProtocolHandler ["http-nio-8080"]
+INFO  | 2025-08-19 20:55:16 | [restartedMain] o.s.b.w.e.t.TomcatWebServer.start:241 - Tomcat started on port 8080 (http) with context path ''
+INFO  | 2025-08-19 20:55:16 | [restartedMain] o.s.b.StartupInfoLogger.logStarted:56 - Started BackendApplication in 15.729 seconds (process running for 17.015)
+INFO  | 2025-08-19 20:55:30 | [SpringApplicationShutdownHook] o.s.o.j.AbstractEntityManagerFactoryBean.destroy:650 - Closing JPA EntityManagerFactory for persistence unit 'default'
+INFO  | 2025-08-19 20:55:30 | [SpringApplicationShutdownHook] c.z.h.HikariDataSource.close:350 - HikariPool-1 - Shutdown initiated...
+INFO  | 2025-08-19 20:55:30 | [SpringApplicationShutdownHook] c.z.h.HikariDataSource.close:352 - HikariPool-1 - Shutdown completed.
+ERROR | 2025-08-19 21:01:04 | [restartedMain] o.s.b.SpringApplication.%PARSER_ERROR[M] - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@360a6775 - Failed to instantiate converter class [ch.qos.logback.classic.pattern.MethodOfCallerConverter] as a composite converter for keyword [M] ch.qos.logback.core.util.IncompatibleClassException
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@360a6775 - Failed to create converter for [%M] keyword
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@12141bd5 - Failed to instantiate converter class [ch.qos.logback.classic.pattern.MethodOfCallerConverter] as a composite converter for keyword [M] ch.qos.logback.core.util.IncompatibleClassException
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@12141bd5 - Failed to create converter for [%M] keyword
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:347)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:369)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:329)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at org.example.backend.BackendApplication.main(BackendApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@360a6775 - Failed to instantiate converter class [ch.qos.logback.classic.pattern.MethodOfCallerConverter] as a composite converter for keyword [M] ch.qos.logback.core.util.IncompatibleClassException
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@360a6775 - Failed to create converter for [%M] keyword
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@12141bd5 - Failed to instantiate converter class [ch.qos.logback.classic.pattern.MethodOfCallerConverter] as a composite converter for keyword [M] ch.qos.logback.core.util.IncompatibleClassException
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@12141bd5 - Failed to create converter for [%M] keyword
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reportConfigurationErrorsIfNecessary(LogbackLoggingSystem.java:277)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:255)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:81)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:61)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:189)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:332)
+	... 22 common frames omitted
+	Suppressed: ch.qos.logback.core.util.IncompatibleClassException: null
+		at ch.qos.logback.core.util.OptionHelper.instantiateByClassNameAndParameter(OptionHelper.java:58)
+		at ch.qos.logback.core.util.OptionHelper.instantiateByClassName(OptionHelper.java:44)
+		at ch.qos.logback.core.util.OptionHelper.instantiateByClassName(OptionHelper.java:33)
+		at ch.qos.logback.core.pattern.parser.Compiler.createCompositeConverter(Compiler.java:130)
+		at ch.qos.logback.core.pattern.parser.Compiler.compile(Compiler.java:47)
+		at ch.qos.logback.core.pattern.parser.Compiler.compile(Compiler.java:57)
+		at ch.qos.logback.core.pattern.parser.Parser.compile(Parser.java:87)
+		at ch.qos.logback.core.pattern.PatternLayoutBase.start(PatternLayoutBase.java:85)
+		at ch.qos.logback.classic.encoder.PatternLayoutEncoder.start(PatternLayoutEncoder.java:28)
+		at ch.qos.logback.core.model.processor.ImplicitModelHandler.postHandleComplex(ImplicitModelHandler.java:208)
+		at ch.qos.logback.core.model.processor.ImplicitModelHandler.postHandle(ImplicitModelHandler.java:186)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.secondPhaseTraverse(DefaultProcessor.java:257)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.secondPhaseTraverse(DefaultProcessor.java:253)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.secondPhaseTraverse(DefaultProcessor.java:253)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.traversalLoop(DefaultProcessor.java:90)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.process(DefaultProcessor.java:106)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.processModel(GenericXMLConfigurator.java:208)
+		at org.springframework.boot.logging.logback.SpringBootJoranConfigurator.processModel(SpringBootJoranConfigurator.java:122)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.doConfigure(GenericXMLConfigurator.java:170)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.doConfigure(GenericXMLConfigurator.java:122)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.doConfigure(GenericXMLConfigurator.java:65)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.configureByResourceUrl(LogbackLoggingSystem.java:287)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.lambda$loadConfiguration$1(LogbackLoggingSystem.java:249)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.withLoggingSuppressed(LogbackLoggingSystem.java:467)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:244)
+		... 26 common frames omitted
+	Suppressed: ch.qos.logback.core.util.IncompatibleClassException: null
+		at ch.qos.logback.core.util.OptionHelper.instantiateByClassNameAndParameter(OptionHelper.java:58)
+		at ch.qos.logback.core.util.OptionHelper.instantiateByClassName(OptionHelper.java:44)
+		at ch.qos.logback.core.util.OptionHelper.instantiateByClassName(OptionHelper.java:33)
+		at ch.qos.logback.core.pattern.parser.Compiler.createCompositeConverter(Compiler.java:130)
+		at ch.qos.logback.core.pattern.parser.Compiler.compile(Compiler.java:47)
+		at ch.qos.logback.core.pattern.parser.Parser.compile(Parser.java:87)
+		at ch.qos.logback.core.pattern.PatternLayoutBase.start(PatternLayoutBase.java:85)
+		at ch.qos.logback.classic.encoder.PatternLayoutEncoder.start(PatternLayoutEncoder.java:28)
+		at ch.qos.logback.core.model.processor.ImplicitModelHandler.postHandleComplex(ImplicitModelHandler.java:208)
+		at ch.qos.logback.core.model.processor.ImplicitModelHandler.postHandle(ImplicitModelHandler.java:186)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.secondPhaseTraverse(DefaultProcessor.java:257)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.secondPhaseTraverse(DefaultProcessor.java:253)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.secondPhaseTraverse(DefaultProcessor.java:253)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.traversalLoop(DefaultProcessor.java:90)
+		at ch.qos.logback.core.model.processor.DefaultProcessor.process(DefaultProcessor.java:106)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.processModel(GenericXMLConfigurator.java:208)
+		at org.springframework.boot.logging.logback.SpringBootJoranConfigurator.processModel(SpringBootJoranConfigurator.java:122)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.doConfigure(GenericXMLConfigurator.java:170)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.doConfigure(GenericXMLConfigurator.java:122)
+		at ch.qos.logback.core.joran.GenericXMLConfigurator.doConfigure(GenericXMLConfigurator.java:65)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.configureByResourceUrl(LogbackLoggingSystem.java:287)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.lambda$loadConfiguration$1(LogbackLoggingSystem.java:249)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.withLoggingSuppressed(LogbackLoggingSystem.java:467)
+		at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:244)
+		... 26 common frames omitted
+2025-08-19 21:08:22 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-08-19 21:08:22 INFO  [restartedMain] o.example.backend.BackendApplication - Starting BackendApplication using Java 21.0.8 with PID 7992 (D:\dinhduong\backend\target\classes started by QUYNH in D:\dinhduong\backend)
+2025-08-19 21:08:22 INFO  [restartedMain] o.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-19 21:08:22 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-08-19 21:08:22 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-08-19 21:08:24 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-19 21:08:25 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 143 ms. Found 6 JPA repository interfaces.
+2025-08-19 21:08:27 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-08-19 21:08:27 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-08-19 21:08:27 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-19 21:08:27 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2025-08-19 21:08:28 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-19 21:08:28 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5488 ms
+2025-08-19 21:08:28 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-08-19 21:08:28 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-19 21:08:29 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-19 21:08:30 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-19 21:08:31 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67f878e6
+2025-08-19 21:08:31 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-19 21:08:31 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-19 21:08:31 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-08-19 21:08:35 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-19 21:08:35 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 21:08:37 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-19 21:08:39 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@582a5d48, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@229f8d85, org.springframework.security.web.context.SecurityContextHolderFilter@5f3d01ca, org.springframework.security.web.header.HeaderWriterFilter@78a5ee2c, org.springframework.web.filter.CorsFilter@3255c247, org.springframework.security.web.authentication.logout.LogoutFilter@4a04a5f9, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@2042a988, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@156de44c, org.example.backend.security.JwtFilter@3f24def0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@15993b0f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1db72193, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@20ddbd34, org.springframework.security.web.session.SessionManagementFilter@c90781a, org.springframework.security.web.access.ExceptionTranslationFilter@357f84da, org.springframework.security.web.access.intercept.AuthorizationFilter@28933c7a]
+2025-08-19 21:08:40 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-08-19 21:08:40 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-08-19 21:08:40 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2025-08-19 21:08:40 INFO  [restartedMain] o.example.backend.BackendApplication - Started BackendApplication in 19.63 seconds (process running for 21.465)
+2025-08-19 21:09:20 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 21:09:20 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-19 21:09:20 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-08-19 21:24:21 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-08-19 21:24:21 INFO  [restartedMain] o.example.backend.BackendApplication - Starting BackendApplication using Java 21.0.8 with PID 7480 (D:\dinhduong\backend\target\classes started by QUYNH in D:\dinhduong\backend)
+2025-08-19 21:24:21 INFO  [restartedMain] o.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-19 21:24:21 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-08-19 21:24:21 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-08-19 21:24:24 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-19 21:24:24 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 101 ms. Found 6 JPA repository interfaces.
+2025-08-19 21:24:27 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-08-19 21:24:27 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-08-19 21:24:27 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-19 21:24:27 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2025-08-19 21:24:27 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-19 21:24:27 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5839 ms
+2025-08-19 21:24:28 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-08-19 21:24:28 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-19 21:24:29 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-19 21:24:29 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-19 21:24:30 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7a84bce3
+2025-08-19 21:24:30 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-19 21:24:30 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-19 21:24:30 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-08-19 21:24:34 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-19 21:24:34 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 21:24:37 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-19 21:24:39 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@60463d0a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4433dce4, org.springframework.security.web.context.SecurityContextHolderFilter@5240775b, org.springframework.security.web.header.HeaderWriterFilter@4858df6f, org.springframework.web.filter.CorsFilter@6c6feefc, org.springframework.security.web.authentication.logout.LogoutFilter@1f094587, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7b5fcd79, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@1f377cca, org.example.backend.security.JwtFilter@275c826b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@15e377d7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@57e48b1b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@9fd9d95, org.springframework.security.web.session.SessionManagementFilter@51964176, org.springframework.security.web.access.ExceptionTranslationFilter@15af73b0, org.springframework.security.web.access.intercept.AuthorizationFilter@35809cc7]
+2025-08-19 21:24:41 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-08-19 21:24:41 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-08-19 21:24:41 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2025-08-19 21:24:41 INFO  [restartedMain] o.example.backend.BackendApplication - Started BackendApplication in 21.372 seconds (process running for 22.726)
+2025-08-19 21:25:43 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-19 21:25:43 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-19 21:25:43 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
