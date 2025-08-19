@@ -36,36 +36,27 @@ public class ProposerService {
         return proposerRepisitory.save(proposer);
     }
 
-//    public Proposer update(Long id, ProposerDTO proposerDTO){
-//        if (proposerRepisitory.findById(id).isPresent()){
-//            Proposer proposer = proposerRepisitory.findById(id).get();
-//            proposer.setEducation(proposerDTO.getEducation());
-//            proposer.setMajor(proposerDTO.getMajor());
-//            proposer.setUnit(proposerDTO.getUnit());
-//            proposer.setPosition(proposerDTO.getPosition());
-//            proposer.setField(proposerDTO.getField());
-//            proposer.setPhoneNumber(proposerDTO.getPhoneNumber());
-//            return proposerRepisitory.save(proposer);
-//        } else {
-//            throw new RuntimeException("Không tìm người đề xuất với id:  " + id);
-//        }
-//    }
-
     public Proposer update(Long id, ProposerDTO proposerDTO) {
         return proposerRepisitory.findById(id)
                 .map(existing -> {
-                    existing.setEducation(proposerDTO.getEducation());
-                    existing.setMajor(proposerDTO.getMajor());
-                    existing.setUnit(proposerDTO.getUnit());
-                    existing.setPosition(proposerDTO.getPosition());
-                    existing.setField(proposerDTO.getField());
-                    existing.setPhoneNumber(proposerDTO.getPhoneNumber());
-
-                    // giữ nguyên status cũ nếu DTO không truyền lên
-                    if (proposerDTO.getStatus() != null) {
-                        existing.setStatus(proposerDTO.getStatus());
+                    if (proposerDTO.getEducation() != null && !proposerDTO.getEducation().isEmpty()) {
+                        existing.setEducation(proposerDTO.getEducation());
                     }
-
+                    if (proposerDTO.getMajor() != null && !proposerDTO.getMajor().isEmpty()) {
+                        existing.setMajor(proposerDTO.getMajor());
+                    }
+                    if (proposerDTO.getUnit() != null && !proposerDTO.getUnit().isEmpty()) {
+                        existing.setUnit(proposerDTO.getUnit());
+                    }
+                    if (proposerDTO.getPosition() != null && !proposerDTO.getPosition().isEmpty()) {
+                        existing.setPosition(proposerDTO.getPosition());
+                    }
+                    if (proposerDTO.getField() != null && !proposerDTO.getField().isEmpty()) {
+                        existing.setField(proposerDTO.getField());
+                    }
+                    if (proposerDTO.getPhoneNumber() != null && !proposerDTO.getPhoneNumber().isEmpty()) {
+                        existing.setPhoneNumber(proposerDTO.getPhoneNumber());
+                    }
                     return proposerRepisitory.save(existing);
                 })
                 .orElseThrow(() -> new RuntimeException("Không tìm người đề xuất với id: " + id));

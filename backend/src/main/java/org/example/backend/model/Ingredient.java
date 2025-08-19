@@ -62,19 +62,16 @@ public class Ingredient {
     private Double arachidic;
     private Double behenic;
     private Double lignoceric;
-    @Column(name = "TS acid béo không no 1 nối đôi")
     private Double tsAxitBeoKhongNo1Noi;
     private Double myristoleic;
     private Double palmitoleic;
     private Double oleic;
-    @Column(name = "TS acid béo không no nhiều nối đôi")
     private Double tsAxitBeoKhongNoNhieuNoiDoi;
     private Double linoleic;
     private Double linolenic;
     private Double arachidonic;
     private Double epa;
     private Double dha;
-    @Column(name = "ts acid béo trans")
     private Double tsAcidBeoTrans;
     private Double cholesterol;
     private Double phytosterol;
@@ -109,7 +106,7 @@ public class Ingredient {
         DONG_VAT, THUC_VAT
     }
     public enum TrangThai {
-        CHO_DUYET, DA_DUYET, TU_CHO
+        CHO_DUYET, DA_DUYET, TU_CHOI
     }
 
     public Long getId() {
