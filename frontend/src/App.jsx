@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/LandingPage";
 import RegisterExpert from "./pages/RegisterExpert";
 import FoodTable from "./pages/FoodTable";
+import OAuth2Success from "./pages/OAuth2Success";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/registerexpert" element={<RegisterExpert />} />
           <Route path="/foodtable" element={<FoodTable />} />
+          <Route path="/oauth2/success" element={<OAuth2Success />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

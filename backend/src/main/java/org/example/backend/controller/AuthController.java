@@ -72,21 +72,21 @@ public class AuthController {
         return "Tài khoản đã được xác thực thành công. Bạn có thể đăng nhập.";
     }
 
-    @RestController
-    @RequestMapping("/api/auth")
-    public class GoogleAuthController {
-
-        @GetMapping("/google-success")
-        public String success(OAuth2AuthenticationToken authentication) {
-            Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
-            String email = (String) attributes.get("email");
-            String name = (String) attributes.get("name");
-
-            // Nếu user chưa tồn tại -> tạo mới
-            // Nếu đã có -> trả JWT hoặc session
-
-            return "Đăng nhập thành công với email: " + email + ", tên: " + name;
-        }
-    }
+//    @RestController
+//    @RequestMapping("/api/auth")
+//    public class GoogleAuthController {
+//
+//        @GetMapping("/google-success")
+//        public String success(OAuth2AuthenticationToken authentication) {
+//            Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
+//            String email = (String) attributes.get("email");
+//            String name = (String) attributes.get("name");
+//
+//            // Nếu user chưa tồn tại -> tạo mới
+//            // Nếu đã có -> trả JWT hoặc session
+//
+//            return "Đăng nhập thành công với email: " + email + ", tên: " + name;
+//        }
+//    }
 
 }

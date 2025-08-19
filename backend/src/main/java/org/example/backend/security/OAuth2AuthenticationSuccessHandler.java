@@ -33,7 +33,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     }
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
         String username = authentication.getName();
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -42,12 +44,11 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy user với username = " + username));
 
         // Sinh JWT
-        String token = jwtUtil.generateToken(userDetails,user.getId());
+        String token = jwtUtil.generateToken(userDetails, user.getId());
 
-        // Trả JSON về frontend
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        String json = String.format("{\"token\": \"%s\", \"username\": \"%s\"}", token, username);
-        response.getWriter().write(json);
+        // Redirect về React app, FE sẽ đọc token từ query param
+        String redirectUrl = "http://localhost:5173/oauth2/success?token=" + token;
+        response.sendRedirect(redirectUrl);
     }
+
 }
