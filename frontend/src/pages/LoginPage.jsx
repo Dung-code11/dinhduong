@@ -6,6 +6,8 @@ import { useAuth } from "../context/AuthContext";
 import logo from "../assets/test-logo.png";
 import logologin from "../assets/health.svg";
 import styles from "../css/LoginPage.module.css"; // CSS Module
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 const LoginPage = () => {
   const { values, handleChange } = useForm({ username: "", password: "" });
@@ -20,7 +22,32 @@ const LoginPage = () => {
       alert("Đăng Nhập Thất Bại");
     }
   };
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      // token từ Google
+      const googleToken = credentialResponse.credential;
 
+      // Gửi token lên backend để verify và tạo JWT
+      const res = await axios.post("http://localhost:8080/api/auth/google-success", {
+        token: googleToken,
+      });
+
+      const jwt = res.data.token;
+      localStorage.setItem("token", jwt);
+
+      console.log("Đăng nhập Google thành công!", res.data);
+      window.location.href = "/dashboard";
+    } catch (err) {
+      console.error("Lỗi đăng nhập Google:", err);
+    }
+  };
+  const handleGoogleError = () => {
+    console.error("Google Login thất bại");
+  };
+  const logingoogle = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: handleGoogleError,
+  });
   return (
     <div className={styles["login-page"]}>
       <div className={styles["login-left"]}>
@@ -65,7 +92,12 @@ const LoginPage = () => {
 
           <div className={styles["divider"]}>Hoặc đăng nhập với</div>
           <div className={styles["social-login"]}>
-            <button className={`${styles["social-btn"]} ${styles["google"]}`}>G</button>
+            <button
+              className={`${styles["social-btn"]} ${styles["google"]}`}
+              onClick={() => logingoogle()}
+            >
+              G
+            </button>
             <button className={`${styles["social-btn"]} ${styles["facebook"]}`}>f</button>
           </div>
 

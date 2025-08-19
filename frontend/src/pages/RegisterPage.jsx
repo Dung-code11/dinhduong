@@ -8,19 +8,14 @@ import logologin from "../assets/health.svg";
 import styles from "../css/LoginPage.module.css"; // sử dụng CSS module
 
 const RegisterPage = () => {
- const { values, handleChange } = useForm({
-  fullName: "",   // ✅ phải là fullName, không phải fullname
-  username: "",
-  password: "",
-  sex: "",         // ✅ chuẩn
-  email: "",
-  phone: "",
-  dob: "",         // ✅ chuẩn (date string, ví dụ: "2001-01-01")
-  address: "",
-});
-
-
-
+  const { values, handleChange } = useForm({
+    fullName: "",   // ✅ phải là fullName, không phải fullname
+    email: "",
+    password: "",
+    gender: "",         // ✅ chuẩn
+    dob: "",         // ✅ chuẩn (date string, ví dụ: "2001-01-01")
+    address: "",
+  });
   const { register } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -28,12 +23,12 @@ const RegisterPage = () => {
 
     try {
       const result = await register(values);
-      if (result?.success) {
+      if (result === "Đăng ký thành công!") {
         alert("Đăng ký thành công! Bạn có thể đăng nhập ngay.");
-        // Optional: chuyển hướng sau khi đăng ký thành công
         window.location.href = "/login";
       } else {
-        alert(result?.message || "Đăng ký thất bại. Vui lòng thử lại.");
+        alert(result || "Đăng ký thất bại. Vui lòng thử lại.");
+        console.error("Lỗi từ API:", result);
       }
     } catch (error) {
       console.error("Đăng ký lỗi:", error);
@@ -57,7 +52,7 @@ const RegisterPage = () => {
 
           <form onSubmit={handleSubmit}>
             <Input label="Họ và tên" name="fullName" value={values.fullName} onChange={handleChange} placeholder="Nhập họ tên đầy đủ" />
-            <Input label="Tên đăng nhập" name="username" value={values.username} onChange={handleChange} placeholder="Tên đăng nhập" />
+            <Input label="Email" type="email" name="email" value={values.email} onChange={handleChange} placeholder="Email cá nhân" />
             <Input label="Mật khẩu" type="password" name="password" value={values.password} onChange={handleChange} placeholder="Nhập mật khẩu" />
 
             {/* 👇 Nhóm radio chọn giới tính */}
@@ -67,9 +62,9 @@ const RegisterPage = () => {
                 <label>
                   <input
                     type="radio"
-                    name="sex"
-                    value="Nam"
-                    checked={values.sex === "Nam"}
+                    name="gender"
+                    value="NAM"
+                    checked={values.gender === "NAM"}
                     onChange={handleChange}
                   />
                   Nam
@@ -77,31 +72,20 @@ const RegisterPage = () => {
                 <label>
                   <input
                     type="radio"
-                    name="sex"
-                    value="Nữ"
-                    checked={values.sex === "Nữ"}
+                    name="gender"
+                    value="NU"
+                    checked={values.gender === "NU"}
                     onChange={handleChange}
                   />
                   Nữ
                 </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="sex"
-                    value="Khác"
-                    checked={values.sex === "Khác"}
-                    onChange={handleChange}
-                  />
-                  Khác
-                </label>
               </div>
             </div>
 
-            <Input label="Email" type="email" name="email" value={values.email} onChange={handleChange} placeholder="Email cá nhân" />
-            <Input label="Số điện thoại" type="tel" name="phone" value={values.phone} onChange={handleChange} placeholder="SĐT liên hệ" />
+
             <Input label="Ngày sinh" type="date" name="dob" value={values.dob} onChange={handleChange} />
             <Input label="Địa chỉ" name="address" value={values.address} onChange={handleChange} placeholder="Nhập địa chỉ liên hệ" />
-            
+
             <Button type="submit">Đăng Ký</Button>
           </form>
 
