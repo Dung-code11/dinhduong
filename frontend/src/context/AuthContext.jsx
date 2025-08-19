@@ -38,23 +38,25 @@ export const AuthProvider = ({ children }) => {
         navigate("/login");
     };
 
-    const register = async (data) => {
-    try {
-        const response = await axios.post("http://localhost:8080/api/auth/register", data);
+    const register = async (values) => {
+        try {
+            const response = await axios.post("http://localhost:8080/api/auth/register", {
+                fullName: values.fullName,
+                dob: values.dob,
+                gender: values.gender,       // đổi sex → gender
+                address: values.address,
+                email: values.email,
+                password: values.password,
+            });
 
-        // Trường hợp thành công
-        return {
-            success: true,
-            message: response.data?.message || "Đăng ký thành công",
-        };
-    } catch (error) {
-        console.error("Đăng ký lỗi:", error.response?.data || error.message);
-        return {
-            success: false,
-            message: error.response?.data?.message || "Lỗi đăng ký",
-        };
-    }
-};
+            console.log("Đăng ký thành công:", response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Đăng ký lỗi:", error.response?.data || error.message);
+            throw error;
+        }
+    };
+
 
     return (
         <AuthContext.Provider value={{ user, token, login, logout, register }}>
