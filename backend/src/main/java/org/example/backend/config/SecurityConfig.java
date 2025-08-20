@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.backend.security.OAuth2AuthenticationSuccessHandler;
 import org.example.backend.service.CustomOAuth2UserService;
+import org.example.backend.service.CustomOidcUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,10 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
+    private CustomOAuth2UserService customOAuth2UserService ;
+
+    @Autowired
+    private CustomOidcUserService customOidcUserService ;
 
     @Autowired
     private OAuth2AuthenticationSuccessHandler oauth2SuccessHandler;
@@ -80,10 +84,9 @@ public class SecurityConfig {
                     log.info("⚡ Bắt đầu cấu hình OAuth2 Login");
                     oauth2
                             .loginPage("/login")
-                            .userInfoEndpoint(userInfo -> {
-                                log.info("➡️  Gọi vào CustomOAuth2UserService để load user info");
-                                userInfo.userService(customOAuth2UserService);
-                            })
+                            .userInfoEndpoint(userInfo -> userInfo
+                                    .oidcUserService(customOidcUserService)   // <-- thay vì userService()
+                            )
                             .successHandler((request, response, authentication) -> {
                                 log.info("✅ OAuth2 login thành công cho user: {}", authentication.getName());
                                 oauth2SuccessHandler.onAuthenticationSuccess(request, response, authentication);

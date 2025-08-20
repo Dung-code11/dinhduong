@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.backend.model.User;
 import org.example.backend.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     private UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2AuthenticationSuccessHandler.class.getSimpleName());
 
     public OAuth2AuthenticationSuccessHandler(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
@@ -74,6 +77,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
                         .build(),
                 user.getId()
         );
+        LOGGER.info("Jwt token : {}",token);
 
         // Redirect về FE
         String redirectUrl = "http://localhost:5173/oauth2/success?token=" + token;
