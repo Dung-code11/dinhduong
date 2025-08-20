@@ -1,9 +1,12 @@
 package org.example.backend.service;
 
+
 import org.example.backend.model.Profile;
 import org.example.backend.model.User;
 import org.example.backend.repository.ProfileRepository;
 import org.example.backend.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,32 +30,48 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private ProfileRepository profileRepository;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomOAuth2UserService.class.getSimpleName());
+
+    public CustomOAuth2UserService() {
+        LOGGER.info(">>> CustomOAuth2UserService bean initialized");
+    }
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println(">>> CustomOAuth2UserService.loadUser CALLED");
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
-        String registrationId = userRequest.getClientRegistration().getRegistrationId(); // "google" hoặc "facebook"
+        LOGGER.info("=== [OAUTH2 LOGIN FLOW] ===");
+        LOGGER.info("Provider: {}", userRequest.getClientRegistration().getRegistrationId());
+        LOGGER.info("OAuth2 attributes: {}", oAuth2User.getAttributes());
+        String provider = userRequest.getClientRegistration().getRegistrationId().toUpperCase();
         Map<String, Object> attrs = oAuth2User.getAttributes();
-
-        // Lấy providerId & email tuỳ nhà cung cấp
-        String provider = registrationId.toUpperCase(); // GOOGLE / FACEBOOK
-        String providerId = extractProviderId(provider, attrs);
         String email = extractEmail(provider, attrs);
-
-        // Tìm tài khoản theo provider + providerId
-        User user = userRepository.findByProviderAndProviderId(provider, providerId)
-                .orElseGet(() -> createUserAndProfileFromOAuth(provider, providerId, email, attrs));
-
-        // Có thể cập nhật profile nếu provider trả thêm thông tin mới
-        updateProfileIfNeeded(user.getId(), attrs);
-
-        // Tuỳ bạn: return DefaultOAuth2User với authorities và nameAttributeKey
+        LOGGER.info("Extracted email: {}", email);
+        if (email == null) {
+            throw new OAuth2AuthenticationException("Email not found from provider");
+        }
+        String providerId = extractProviderId(provider, attrs);
+        LOGGER.info("Extracted providerId: {}", providerId);
+        // tìm user theo username (dùng email)
+        Optional<User> userOpt = userRepository.findByUsername(email);
+        User user;
+        if (userOpt.isPresent()) {
+            LOGGER.info("User exists, updating profile...");
+            user = userOpt.get();
+            updateProfileIfNeeded(user.getId(), attrs);
+        } else {
+            LOGGER.info("User not found, creating new user...");
+            user = createUserAndProfileFromOAuth(provider, providerId, email, attrs);
+        }
+        LOGGER.info("=== [OAUTH2 LOGIN SUCCESS] username={} provider={} providerId={} ===",
+                user.getUsername(), user.getProvider(), user.getProviderId());
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole())),
                 oAuth2User.getAttributes(),
                 userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName()
         );
     }
+
 
     private String extractProviderId(String provider, Map<String, Object> attrs) {
         if ("GOOGLE".equals(provider)) {
@@ -72,6 +92,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private User createUserAndProfileFromOAuth(String provider, String providerId, String email, Map<String, Object> attrs) {
         // Tạo User (không cần password)
+        LOGGER.info("Creating new User with provider={} providerId={} email={}", provider, providerId, email);
+        LOGGER.info("create: ");
         User user = new User();
         user.setId(UUID.randomUUID().toString().substring(0, 10));
         user.setUsername(email != null ? email : (provider + "_" + providerId)); // fallback nếu không có email

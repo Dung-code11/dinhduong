@@ -11,6 +11,7 @@ import org.example.backend.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Service
@@ -48,6 +49,21 @@ public class IngredientService {
                 .orElseThrow(() -> new RuntimeException("Ingredient not found with id = " + id));
     }
 
+//    public Ingredient update(Long id, IngredientDTO dto, String token) {
+//        Ingredient existing = findById(id);
+//
+//        Category category = categoryRepository.findById(dto.getCategoryId())
+//                .orElseThrow(() -> new RuntimeException("Category not found"));
+//
+//        String userId = jwtUtil.getUserIdFromToken(token);
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id = " + userId));
+//
+//        Ingredient updated = toEntity(dto, category, user);
+//        updated.setId(existing.getId());
+//
+//        return ingredientRepository.save(updated);
+//    }
     public Ingredient update(Long id, IngredientDTO dto, String token) {
         Ingredient existing = findById(id);
 
@@ -58,10 +74,31 @@ public class IngredientService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id = " + userId));
 
-        Ingredient updated = toEntity(dto, category, user);
-        updated.setId(existing.getId());
+        String role = user.getRole();
 
-        return ingredientRepository.save(updated);
+        // Nếu là USER hoặc USERPRO → tạo bản ghi chờ duyệt
+        if ("USER".equalsIgnoreCase(role) || "USERPRO".equalsIgnoreCase(role)) {
+            Ingredient pending = new Ingredient();
+            pending.setMaterial(dto.getMaterial() != null ? dto.getMaterial() : existing.getMaterial());
+            pending.setCategory(category);
+            pending.setUser(user);
+            pending.setLoaiProtein(dto.getLoaiProtein() != null ? dto.getLoaiProtein() : existing.getLoaiProtein());
+            pending.setTrangThai(Ingredient.TrangThai.CHO_DUYET);
+
+            updateEntityFields(pending, dto);
+
+            return ingredientRepository.save(pending); // bản ghi này sẽ được admin duyệt sau
+        }
+
+        // Nếu là ADMIN hoặc SUPERADMIN → update trực tiếp
+        if ("ADMIN".equalsIgnoreCase(role) || "SUPERADMIN".equalsIgnoreCase(role)) {
+            existing.setCategory(category);
+            updateEntityFields(existing, dto);
+            existing.setTrangThai(Ingredient.TrangThai.DA_DUYET);
+            return ingredientRepository.save(existing);
+        }
+
+        throw new RuntimeException("Role không hợp lệ: " + role);
     }
 
     public void delete(Long id) {
@@ -75,7 +112,7 @@ public class IngredientService {
         ingredient.setCategory(category);
         ingredient.setUser(user);
         ingredient.setLoaiProtein(dto.getLoaiProtein());
-        String role = user.getRole(); // 👈 giả sử User có thuộc tính role
+        String role = user.getRole();
         if ("USER".equalsIgnoreCase(role) || "USERPRO".equalsIgnoreCase(role)) {
             ingredient.setTrangThai(Ingredient.TrangThai.CHO_DUYET);
         } else if ("ADMIN".equalsIgnoreCase(role) || "SUPERADMIN".equalsIgnoreCase(role)) {
@@ -164,4 +201,34 @@ public class IngredientService {
         return ingredient;
     }
 
+    private void updateEntityFields(Ingredient existing, IngredientDTO dto) {
+        try {
+            Field[] fields = IngredientDTO.class.getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                Object newValue = field.get(dto);
+
+                if (newValue == null) {
+                    continue; // bỏ qua nếu null
+                }
+
+                if (newValue instanceof String str) {
+                    if (str.trim().isEmpty()) {
+                        continue; // bỏ qua nếu chuỗi rỗng
+                    }
+                }
+
+                // Tìm field tương ứng trong Ingredient
+                try {
+                    Field existingField = Ingredient.class.getDeclaredField(field.getName());
+                    existingField.setAccessible(true);
+                    existingField.set(existing, newValue);
+                } catch (NoSuchFieldException ignore) {
+                    // DTO có field nhưng Entity không có thì bỏ qua
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Error updating entity fields", e);
+        }
+    }
 }
