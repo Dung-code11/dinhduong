@@ -10,7 +10,9 @@ export default function OAuth2Success() {
 
     if (token) {
       localStorage.setItem("token", token);
-      navigate("/dashboard"); // hoặc navigate("/") tuỳ bạn
+      console.log("token:", token);
+
+      setTimeout(() => navigate("/dashboard"), 0); // hoặc navigate("/") tuỳ bạn
     } else {
       navigate("/login");
     }
