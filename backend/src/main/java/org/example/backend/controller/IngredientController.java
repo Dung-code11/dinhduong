@@ -39,6 +39,13 @@ public class IngredientController {
         return ResponseEntity.ok(updated);
     }
 
+    @PostMapping("/approve/{pendingId}")
+    public ResponseEntity<Ingredient> approvePending(@PathVariable Long pendingId, @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        Ingredient approved = ingredientService.approvePending(pendingId, token);
+        return ResponseEntity.ok(approved);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         ingredientService.delete(id);
