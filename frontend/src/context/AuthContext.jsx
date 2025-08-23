@@ -18,9 +18,10 @@ export const AuthProvider = ({ children }) => {
                 password,
             });
 
-            const token = response.data.token;
+            const token = response.data;
             setToken(token);
             localStorage.setItem("token", token);
+            console.log(token);
             setUser({ username }); // giả định backend không trả thông tin user
 
             navigate("/dashboard");

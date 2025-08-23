@@ -3,15 +3,33 @@ import axios from "axios";
 import styles from "../css/FoodTable.module.css";
 
 // API service functions
-const API_URL = "http://localhost:8080/api/user/ingredients";
+const API = axios.create({
+    baseURL: "http://localhost:8080/api/",
+});
 
+// interceptor để gắn token cho mọi request
+API.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+// ingredientAPI
 const ingredientAPI = {
-    getIngredients: () => axios.get(API_URL),
-    getIngredientById: (id) => axios.get(`${API_URL}/${id}`),
-    createIngredient: (data) => axios.post(API_URL, data),
-    updateIngredient: (id, data) => axios.put(`${API_URL}/${id}`, data),
-    deleteIngredient: (id) => axios.delete(`${API_URL}/${id}`)
+    getIngredients: () => API.get("user/ingredients"),
+    getIngredientById: (id) => API.get(`user/ingredients/${id}`),
+    createIngredient: (data) => API.post("user/ingredients", data),
+    updateIngredient: (id, data) => API.put(`user/ingredients/${id}`, data),
+    deleteIngredient: (id) => API.delete(`user/ingredients/${id}`),
 };
+
+// categoryAPI
+const categoryAPI = {
+    getCategories: () => API.get("superadmin/category/")
+};
+
 
 export default function FoodTable() {
     const [tableData, setTableData] = useState([]);
@@ -25,6 +43,7 @@ export default function FoodTable() {
     const [openFilter, setOpenFilter] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("Nhóm");
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [filterValues, setFilterValues] = useState({
         group: "",
         proteinType: ""
@@ -33,14 +52,144 @@ export default function FoodTable() {
 
     // Fetch data on component mount
     useEffect(() => {
-        fetchIngredients();
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                await fetchIngredients();
+                const res = await categoryAPI.getCategories();
+                setCategories(res.data);
+            } catch (err) {
+                console.error("Fetch categories error:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
     }, []);
+    // Hàm tính toán các giá trị phụ thuộc
+    const calculateCarbohydrate = (item) => {
+        return 100 - ((item.water || 0) + (item.protein || 0) + (item.fat || 0) + (item.ash || 0));
+    };
 
+    const calculateEnergy = (item) => {
+        return 4 * (item.protein || 0) + 9 * (item.fat || 0) + 4 * calculateCarbohydrate(item);
+    };
+
+    const calculateE = (item) => {
+        return ((item.edible || 0) * calculateEnergy(item)) / 100;
+    };
+
+    const calculateP = (item) => {
+        return (item.protein || 0) * calculateEnergy(item) / 100;
+    };
+
+    const calculateL = (item) => {
+        return (item.fat || 0) * calculateEnergy(item) / 100;
+    };
+
+    const calculateG = (item) => {
+        return calculateCarbohydrate(item) * calculateEnergy(item) / 100;
+    };
     const fetchIngredients = async () => {
         try {
             setLoading(true);
             const response = await ingredientAPI.getIngredients();
-            setTableData(response.data);
+            // console.log("API Response:", response.data);
+
+            // Chuyển đổi dữ liệu từ API sang định dạng component mong đợi
+            const convertedData = response.data.map(item => ({
+                id: item.id,
+                name: item.material,
+                group: item.category?.categoryName || "",
+                proteinType: item.loaiProtein === "THUC_VAT" ? "Thực vật" : "Động Vật",
+                Edible: item.edible,
+                Water: item.water,
+                Protein: item.protein,
+                Fat: item.fat,
+                Fiber: item.fiber,
+                Ash: item.ash,
+                Calci: item.calci,
+                Phosphorous: item.phosphorous,
+                Iron: item.iron,
+                Zinc: item.zinc,
+                Sodium: item.sodium,
+                Potassium: item.potassium,
+                Magnesium: item.magnesium,
+                Manganese: item.manganese,
+                Copper: item.copper,
+                Selenium: item.selenium,
+                "Vitamin C": item.vitaminC,
+                Thiamine: item.thiamine,
+                Riboflavin: item.riboflavin,
+                Niacin: item.niacin,
+                "Pantothenic acid": item.pantothenicAcid,
+                "Vitamin B6": item.vitaminB6,
+                Folate: item.folate,
+                "Folic acid": item.folicAcid,
+                Biotin: item.biotin,
+                "Vitamin B12": item.vitaminB12,
+                Retinol: item.retinol,
+                "Vitamin D": item.vitaminD,
+                "Vitamin E": item.vitaminE,
+                "Vitamin K": item.vitaminK,
+                "b-carotene": item.betaCarotene,
+                "a-carotene": item.alphaCarotene,
+                "b-cryptoxanthin": item.betaCryptoxanthin,
+                Lycopene: item.lycopene,
+                "Lutein + zeaxanthin": item.luteinZeaxanthin,
+                "Isoflavone tổng số": item.isoflavoneTongSo,
+                Daidzein: item.daidzein,
+                Genistein: item.genistein,
+                Glycetin: item.glycetin,
+                Purine: item.purine,
+                "Palmitic (C16:0)": item.palmitic,
+                "Margaric (C17:0)": item.margaric,
+                "Stearic (C18:0)": item.stearic,
+                "Arachidic (C20:0)": item.arachidic,
+                "Behenic (C22:0)": item.behenic,
+                "Lignoceric (C24:0)": item.lignoceric,
+                "TS acid béo không no 1 nối đôi": item.tsAxitBeoKhongNo1NoiDoi,
+                "Myristoleic (C14:1)": item.myristoleic,
+                "Palmitoleic (C16:1)": item.palmitoleic,
+                "Oleic (C18:1)": item.oleic,
+                "TS acid béo không no nhiều nối đôi": item.tsAxitBeoKhongNoNhieuNoiDoi,
+                Linoleic: item.linoleic,
+                Linolenic: item.linolenic,
+                "Arachidonic (C20:4)": item.arachidonic,
+                "EPA (C20:5 n3)": item.epa,
+                "DHA (C22:6 n3)": item.dha,
+                "TS acid béo trans": item.tsAxitBeoTrans,
+                Cholesterol: item.cholesterol,
+                Phytosterol: item.phytosterol,
+                Lysin: item.lysin,
+                Methionin: item.methionin,
+                Tryptophan: item.tryptophan,
+                Phenylalanin: item.phenylalanin,
+                Threonin: item.threonin,
+                Valine: item.valine,
+                Leucine: item.leucine,
+                Isoleucine: item.isoleucine,
+                Arginine: item.arginine,
+                Histidine: item.histidine,
+                Cystine: item.cystine,
+                Tyrosine: item.tyrosine,
+                Alanine: item.alanine,
+                "Aspartic acid": item.asparticAcid,
+                "Glutamic acid": item.glutamicAcid,
+                Glycine: item.glycine,
+                Proline: item.proline,
+                Serine: item.serine,
+                // Tính toán các trường phụ thuộc
+                Carbohydrate: calculateCarbohydrate(item),
+                Energy: calculateEnergy(item),
+                E: calculateE(item),
+                P: calculateP(item),
+                L: calculateL(item),
+                G: calculateG(item),
+                "Vitamin A -RAE": null // Có thể tính toán sau nếu cần
+            }));
+
+            setTableData(convertedData);
             setError(null);
         } catch (err) {
             setError("Lỗi khi tải dữ liệu: " + (err.response?.data?.message || err.message));
@@ -48,6 +197,96 @@ export default function FoodTable() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const convertToApiFormat = (componentData) => {
+        console.log("DEBUG group:", componentData.group);
+        console.log("DEBUG categories:", categories.map(c => c.categoryName));
+
+        const categoryObj = categories.find(c => c.categoryName === componentData.group);
+        console.log("DEBUG matched:", categoryObj);
+        return {
+            material: componentData.name,
+            categoryId: categoryObj ? categoryObj.id : null, // gửi id
+            loaiProtein: componentData.proteinType === "Thực vật" ? "THUC_VAT" : "DONG_VAT",
+            edible: componentData.Edible,
+            water: componentData.Water,
+            protein: componentData.Protein,
+            fat: componentData.Fat,
+            fiber: componentData.Fiber,
+            ash: componentData.Ash,
+            calci: componentData.Calci,
+            phosphorous: componentData.Phosphorous,
+            iron: componentData.Iron,
+            zinc: componentData.Zinc,
+            sodium: componentData.Sodium,
+            potassium: componentData.Potassium,
+            magnesium: componentData.Magnesium,
+            manganese: componentData.Manganese,
+            copper: componentData.Copper,
+            selenium: componentData.Selenium,
+            vitaminC: componentData["Vitamin C"],
+            thiamine: componentData.Thiamine,
+            riboflavin: componentData.Riboflavin,
+            niacin: componentData.Niacin,
+            pantothenicAcid: componentData["Pantothenic acid"],
+            vitaminB6: componentData["Vitamin B6"],
+            folate: componentData.Folate,
+            folicAcid: componentData["Folic acid"],
+            biotin: componentData.Biotin,
+            vitaminB12: componentData["Vitamin B12"],
+            retinol: componentData.Retinol,
+            vitaminD: componentData["Vitamin D"],
+            vitaminE: componentData["Vitamin E"],
+            vitaminK: componentData["Vitamin K"],
+            betaCarotene: componentData["b-carotene"],
+            alphaCarotene: componentData["a-carotene"],
+            betaCryptoxanthin: componentData["b-cryptoxanthin"],
+            lycopene: componentData.Lycopene,
+            luteinZeaxanthin: componentData["Lutein + zeaxanthin"],
+            isoflavoneTongSo: componentData["Isoflavone tổng số"],
+            daidzein: componentData.Daidzein,
+            genistein: componentData.Genistein,
+            glycetin: componentData.Glycetin,
+            purine: componentData.Purine,
+            palmitic: componentData["Palmitic (C16:0)"],
+            margaric: componentData["Margaric (C17:0)"],
+            stearic: componentData["Stearic (C18:0)"],
+            arachidic: componentData["Arachidic (C20:0)"],
+            behenic: componentData["Behenic (C22:0)"],
+            lignoceric: componentData["Lignoceric (C24:0)"],
+            tsAxitBeoKhongNo1NoiDoi: componentData["TS acid béo không no 1 nối đôi"],
+            myristoleic: componentData["Myristoleic (C14:1)"],
+            palmitoleic: componentData["Palmitoleic (C16:1)"],
+            oleic: componentData["Oleic (C18:1)"],
+            tsAxitBeoKhongNoNhieuNoiDoi: componentData["TS acid béo không no nhiều nối đôi"],
+            linoleic: componentData.Linoleic,
+            linolenic: componentData.Linolenic,
+            arachidonic: componentData["Arachidonic (C20:4)"],
+            epa: componentData["EPA (C20:5 n3)"],
+            dha: componentData["DHA (C22:6 n3)"],
+            tsAxitBeoTrans: componentData["TS acid béo trans"],
+            cholesterol: componentData.Cholesterol,
+            phytosterol: componentData.Phytosterol,
+            lysin: componentData.Lysin,
+            methionin: componentData.Methionin,
+            tryptophan: componentData.Tryptophan,
+            phenylalanin: componentData.Phenylalanin,
+            threonin: componentData.Threonin,
+            valine: componentData.Valine,
+            leucine: componentData.Leucine,
+            isoleucine: componentData.Isoleucine,
+            arginine: componentData.Arginine,
+            histidine: componentData.Histidine,
+            cystine: componentData.Cystine,
+            tyrosine: componentData.Tyrosine,
+            alanine: componentData.Alanine,
+            asparticAcid: componentData["Aspartic acid"],
+            glutamicAcid: componentData["Glutamic acid"],
+            glycine: componentData.Glycine,
+            proline: componentData.Proline,
+            serine: componentData.Serine
+        };
     };
 
     const foodCategories = [
@@ -59,18 +298,18 @@ export default function FoodTable() {
     ];
 
     const groupClassMap = {
-        "Ngũ cốc & sản phẩm chế biến": styles.ngucoc,
-        "Khoai củ & sản phẩm": styles.khoaicu,
-        "Hạt, quả giàu protein/lipid": styles.hat,
-        "Rau, quả, củ làm rau": styles.raucu,
+        "Ngũ cốc và sản phẩm chế biến": styles.ngucoc,
+        "Khoai củ và sản phẩm chế biến": styles.khoaicu,
+        "Hạt, quả, giàu đạm, béo và sản phẩm chế biến": styles.hat,
+        "Rau, quả, củ dùng làm rau": styles.raucu,
         "Quả chín": styles.quachin,
         "Dầu, mỡ, bơ": styles.dau,
-        "Thịt & sản phẩm": styles.thit,
-        "Thủy sản & sản phẩm": styles.thuysan,
-        "Trứng & sản phẩm": styles.trung,
-        "Sữa & sản phẩm": styles.sua,
+        "Thịt và sản phẩm chế biến": styles.thit,
+        "Thủy sản và sản phẩm chế biến": styles.thuysan,
+        "Trứng và sản phẩm chế biến": styles.trung,
+        "Sữa và sản phẩm chế biến": styles.sua,
         "Đồ hộp": styles.dohop,
-        "Đồ ngọt (bánh, mứt...)": styles.dongot,
+        "Đồ ngọt (đường, bánh, mứt, kẹo)": styles.dongot,
         "Gia vị, nước chấm": styles.gia_vi,
         "Nước giải khát": styles.nuocgiaikhat,
         "Thức ăn truyền thống": styles.truyenthong
@@ -169,18 +408,18 @@ export default function FoodTable() {
     ];
     const groupOptions = [
         "Nhóm",
-        "Ngũ cốc & sản phẩm chế biến",
-        "Khoai củ & sản phẩm",
-        "Hạt, quả giàu protein/lipid",
-        "Rau, quả, củ làm rau",
+        "Ngũ cốc và sản phẩm chế biến",
+        "Khoai củ và sản phẩm chế biến",
+        "Hạt, quả, giàu đạm, béo và sản phẩm chế biến",
+        "Rau, quả, củ dùng làm rau",
         "Quả chín",
         "Dầu, mỡ, bơ",
-        "Thịt & sản phẩm",
-        "Thủy sản & sản phẩm",
-        "Trứng & sản phẩm",
-        "Sữa & sản phẩm",
+        "Thịt và sản phẩm chế biến",
+        "Thủy sản và sản phẩm chế biến",
+        "Trứng và sản phẩm chế biến",
+        "Sữa và sản phẩm chế biến",
         "Đồ hộp",
-        "Đồ ngọt (bánh, mứt...)",
+        "Đồ ngọt (đường, bánh, mứt, kẹo)",
         "Gia vị, nước chấm",
         "Nước giải khát",
         "Thức ăn truyền thống"
@@ -258,24 +497,38 @@ export default function FoodTable() {
     const handleKeyDown = async (e, rowIndex) => {
         if (e.key === "Enter") {
             const updatedTable = [...tableData];
+
+            // Chỉ xử lý các cell thuộc về row đang edit
             Object.keys(tempDataState).forEach(cellKey => {
                 const { rowIndex: rIndex, colKey, newValue } = tempDataState[cellKey];
-                updatedTable[rIndex][colKey] = newValue;
+
+                // Kiểm tra xem rIndex có hợp lệ không
+                if (rIndex >= 0 && rIndex < updatedTable.length) {
+                    // Kiểm tra xem colKey có tồn tại trong row không
+                    if (updatedTable[rIndex] && colKey in updatedTable[rIndex]) {
+                        updatedTable[rIndex][colKey] = newValue;
+                    } else {
+                        console.warn(`Column key "${colKey}" không tồn tại trong row ${rIndex}`);
+                    }
+                } else {
+                    console.warn(`Row index ${rIndex} không hợp lệ`);
+                }
             });
 
             let changes = [];
-            updatedTable.forEach((row, rIndex) => {
-                const oldRow = originalData[rIndex] || {};
-                Object.keys(row).forEach(key => {
-                    if (row[key] !== oldRow[key]) {
-                        changes.push({
-                            row: oldRow.name,
-                            col: key,
-                            oldValue: oldRow[key] ?? "",
-                            newValue: row[key] ?? ""
-                        });
-                    }
-                });
+            // Chỉ kiểm tra changes cho row đang edit
+            const oldRow = originalData[rowIndex] || {};
+            const newRow = updatedTable[rowIndex] || {};
+
+            Object.keys(newRow).forEach(key => {
+                if (newRow[key] !== oldRow[key]) {
+                    changes.push({
+                        row: oldRow.name || "New Row",
+                        col: key,
+                        oldValue: oldRow[key] ?? "",
+                        newValue: newRow[key] ?? ""
+                    });
+                }
             });
 
             if (changes.length > 0) {
@@ -285,32 +538,32 @@ export default function FoodTable() {
                 try {
                     const rowData = updatedTable[rowIndex];
                     if (rowData.id) {
-                        // Update existing
-                        await ingredientAPI.updateIngredient(rowData.id, rowData);
+                        // Update existing - cần chuyển đổi sang định dạng API
+                        const apiData = convertToApiFormat(rowData);
+                        await ingredientAPI.updateIngredient(rowData.id, apiData);
                     } else {
-                        // Create new
-                        const response = await ingredientAPI.createIngredient(rowData);
-                        updatedTable[rowIndex] = response.data; // Update with server response
+                        // Create new - cần chuyển đổi sang định dạng API
+                        const apiData = convertToApiFormat(rowData);
+                        const response = await ingredientAPI.createIngredient(apiData);
+                        // Cập nhật với dữ liệu từ server (có id)
+                        updatedTable[rowIndex] = convertFromApiFormat(response.data);
                     }
                     setTableData(updatedTable);
                 } catch (err) {
                     setError("Lỗi khi lưu: " + (err.response?.data?.message || err.message));
                     console.error("Save error:", err);
-                    // Revert changes on error
+                    // Revert to original data
                     setTableData(originalData);
                 }
-
                 setShowDialog(true);
             }
-
             setEditingRow(null);
         }
     };
-
     const addRow = () => {
         const newRow = {
             name: "",
-            group: groupOptions[0],
+            group: categories.length > 0 ? categories[0].categoryName : "",
             proteinType: proteinTypeOptions[0],
             Edible: "",
             Energy: "",
