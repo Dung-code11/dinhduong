@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/LandingPage";
 import RegisterExpert from "./pages/RegisterExpert";
 import FoodTable from "./pages/FoodTable";
+import Category from "./pages/CategoryTable";
 import OAuth2Success from "./pages/OAuth2Success";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -29,6 +30,7 @@ function App() {
           />
           <Route path="/registerexpert" element={<RegisterExpert />} />
           <Route path="/foodtable" element={<FoodTable />} />
+          <Route path="/category" element={<Category />} />
           <Route path="/oauth2/success" element={<OAuth2Success />} />
         </Routes>
       </AuthProvider>

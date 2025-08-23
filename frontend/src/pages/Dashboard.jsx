@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import FoodTable from '../pages/FoodTable'; // import FoodTable
+import Category from "./CategoryTable";
 import styles from '../css/Sidebar.module.css';
 
 const Dashboard = () => {
@@ -13,6 +14,8 @@ const Dashboard = () => {
       case 'home':
       default:
         return <h2>Chào mừng đến Dashboard</h2>;
+      case 'danhmuc':
+        return <Category />;
     }
   };
 

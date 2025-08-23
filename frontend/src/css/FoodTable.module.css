@@ -354,3 +354,47 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.categoryTable {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableRow {
+  display: table-row;
+}
+
+.tableHeader {
+  font-weight: bold;
+  background: #ffe08c;
+}
+
+.tableCell {
+  display: table-cell;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.tableCell:nth-child(1) { /* ID */
+  width: 15%;
+  text-align: center;
+}
+
+.tableCell:nth-child(2) { /* Tên danh mục */
+  width: 55%;
+}
+
+.tableCell:nth-child(3) { /* Hành động */
+  width: 30%;
+  text-align: center;
+}
+
+.tableCell button {
+  margin: 0 5px;
+  padding: 5px 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}
