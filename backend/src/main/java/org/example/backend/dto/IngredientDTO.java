@@ -46,7 +46,7 @@ public class IngredientDTO {
     private Double isoflavoneTongSo;
     private Double daidzein;
     private Double genistein;
-    private Double glycitein;
+    private Double glycetin;
     private Double purine;
     private Double palmitic;
     private Double margaric;
@@ -54,7 +54,7 @@ public class IngredientDTO {
     private Double arachidic;
     private Double behenic;
     private Double lignoceric;
-    private Double tsAxitBeoKhongNo1Noi;
+    private Double tsAxitBeoKhongNo1NoiDoi;
     private Double myristoleic;
     private Double palmitoleic;
     private Double oleic;
@@ -64,7 +64,7 @@ public class IngredientDTO {
     private Double arachidonic;
     private Double epa;
     private Double dha;
-    private Double tsAcidBeoTrans;
+    private Double tsAxitBeoTrans;
     private Double cholesterol;
     private Double phytosterol;
     private Double lysin;
@@ -94,6 +94,22 @@ public class IngredientDTO {
 
     public void setMaterial(String material) {
         this.material = material;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Double getEdible() {
@@ -400,12 +416,12 @@ public class IngredientDTO {
         this.genistein = genistein;
     }
 
-    public Double getGlycitein() {
-        return glycitein;
+    public Double getGlycetin() {
+        return glycetin;
     }
 
-    public void setGlycitein(Double glycitein) {
-        this.glycitein = glycitein;
+    public void setGlycetin(Double glycetin) {
+        this.glycetin = glycetin;
     }
 
     public Double getPurine() {
@@ -464,12 +480,12 @@ public class IngredientDTO {
         this.lignoceric = lignoceric;
     }
 
-    public Double getTsAxitBeoKhongNo1Noi() {
-        return tsAxitBeoKhongNo1Noi;
+    public Double getTsAxitBeoKhongNo1NoiDoi() {
+        return tsAxitBeoKhongNo1NoiDoi;
     }
 
-    public void setTsAxitBeoKhongNo1Noi(Double tsAxitBeoKhongNo1Noi) {
-        this.tsAxitBeoKhongNo1Noi = tsAxitBeoKhongNo1Noi;
+    public void setTsAxitBeoKhongNo1NoiDoi(Double tsAxitBeoKhongNo1NoiDoi) {
+        this.tsAxitBeoKhongNo1NoiDoi = tsAxitBeoKhongNo1NoiDoi;
     }
 
     public Double getMyristoleic() {
@@ -544,12 +560,12 @@ public class IngredientDTO {
         this.dha = dha;
     }
 
-    public Double getTsAcidBeoTrans() {
-        return tsAcidBeoTrans;
+    public Double getTsAxitBeoTrans() {
+        return tsAxitBeoTrans;
     }
 
-    public void setTsAcidBeoTrans(Double tsAcidBeoTrans) {
-        this.tsAcidBeoTrans = tsAcidBeoTrans;
+    public void setTsAxitBeoTrans(Double tsAxitBeoTrans) {
+        this.tsAxitBeoTrans = tsAxitBeoTrans;
     }
 
     public Double getCholesterol() {
@@ -608,20 +624,20 @@ public class IngredientDTO {
         this.threonin = threonin;
     }
 
-    public Double getLeucine() {
-        return leucine;
-    }
-
-    public void setLeucine(Double leucine) {
-        this.leucine = leucine;
-    }
-
     public Double getValine() {
         return valine;
     }
 
     public void setValine(Double valine) {
         this.valine = valine;
+    }
+
+    public Double getLeucine() {
+        return leucine;
+    }
+
+    public void setLeucine(Double leucine) {
+        this.leucine = leucine;
     }
 
     public Double getIsoleucine() {
@@ -632,20 +648,20 @@ public class IngredientDTO {
         this.isoleucine = isoleucine;
     }
 
-    public Double getHistidine() {
-        return histidine;
-    }
-
-    public void setHistidine(Double histidine) {
-        this.histidine = histidine;
-    }
-
     public Double getArginine() {
         return arginine;
     }
 
     public void setArginine(Double arginine) {
         this.arginine = arginine;
+    }
+
+    public Double getHistidine() {
+        return histidine;
+    }
+
+    public void setHistidine(Double histidine) {
+        this.histidine = histidine;
     }
 
     public Double getCystine() {
@@ -726,21 +742,5 @@ public class IngredientDTO {
 
     public void setTrangThai(Ingredient.TrangThai trangThai) {
         this.trangThai = trangThai;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }

@@ -54,7 +54,7 @@ public class Ingredient {
     private Double isoflavoneTongSo;
     private Double daidzein;
     private Double genistein;
-    private Double glycitein;
+    private Double glycetin;
     private Double purine;
     private Double palmitic;
     private Double margaric;
@@ -62,7 +62,7 @@ public class Ingredient {
     private Double arachidic;
     private Double behenic;
     private Double lignoceric;
-    private Double tsAxitBeoKhongNo1Noi;
+    private Double tsAxitBeoKhongNo1NoiDoi;
     private Double myristoleic;
     private Double palmitoleic;
     private Double oleic;
@@ -72,7 +72,7 @@ public class Ingredient {
     private Double arachidonic;
     private Double epa;
     private Double dha;
-    private Double tsAcidBeoTrans;
+    private Double tsAxitBeoTrans;
     private Double cholesterol;
     private Double phytosterol;
     private Double lysin;
@@ -437,12 +437,12 @@ public class Ingredient {
         this.genistein = genistein;
     }
 
-    public Double getGlycitein() {
-        return glycitein;
+    public Double getGlycetin() {
+        return glycetin;
     }
 
-    public void setGlycitein(Double glycitein) {
-        this.glycitein = glycitein;
+    public void setGlycetin(Double glycetin) {
+        this.glycetin = glycetin;
     }
 
     public Double getPurine() {
@@ -501,12 +501,12 @@ public class Ingredient {
         this.lignoceric = lignoceric;
     }
 
-    public Double getTsAxitBeoKhongNo1Noi() {
-        return tsAxitBeoKhongNo1Noi;
+    public Double getTsAxitBeoKhongNo1NoiDoi() {
+        return tsAxitBeoKhongNo1NoiDoi;
     }
 
-    public void setTsAxitBeoKhongNo1Noi(Double tsAxitBeoKhongNo1Noi) {
-        this.tsAxitBeoKhongNo1Noi = tsAxitBeoKhongNo1Noi;
+    public void setTsAxitBeoKhongNo1NoiDoi(Double tsAxitBeoKhongNo1NoiDoi) {
+        this.tsAxitBeoKhongNo1NoiDoi = tsAxitBeoKhongNo1NoiDoi;
     }
 
     public Double getMyristoleic() {
@@ -581,12 +581,12 @@ public class Ingredient {
         this.dha = dha;
     }
 
-    public Double getTsAcidBeoTrans() {
-        return tsAcidBeoTrans;
+    public Double getTsAxitBeoTrans() {
+        return tsAxitBeoTrans;
     }
 
-    public void setTsAcidBeoTrans(Double tsAcidBeoTrans) {
-        this.tsAcidBeoTrans = tsAcidBeoTrans;
+    public void setTsAxitBeoTrans(Double tsAxitBeoTrans) {
+        this.tsAxitBeoTrans = tsAxitBeoTrans;
     }
 
     public Double getCholesterol() {

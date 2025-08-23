@@ -49,23 +49,12 @@ public class IngredientService {
                 .orElseThrow(() -> new RuntimeException("Ingredient not found with id = " + id));
     }
 
-//    public Ingredient update(Long id, IngredientDTO dto, String token) {
-//        Ingredient existing = findById(id);
-//
-//        Category category = categoryRepository.findById(dto.getCategoryId())
-//                .orElseThrow(() -> new RuntimeException("Category not found"));
-//
-//        String userId = jwtUtil.getUserIdFromToken(token);
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id = " + userId));
-//
-//        Ingredient updated = toEntity(dto, category, user);
-//        updated.setId(existing.getId());
-//
-//        return ingredientRepository.save(updated);
-//    }
     public Ingredient update(Long id, IngredientDTO dto, String token) {
         Ingredient existing = findById(id);
+
+        if (!Ingredient.TrangThai.DA_DUYET.equals(existing.getTrangThai())) {
+            throw new RuntimeException("Chỉ có thể cập nhật bản ghi đã được duyệt (DA_DUYET)");
+        }
 
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
@@ -105,6 +94,46 @@ public class IngredientService {
         Ingredient existing = findById(id);
         ingredientRepository.delete(existing);
     }
+
+    public Ingredient approvePending(Long pendingId, String adminToken) {
+        Ingredient pending = ingredientRepository.findById(pendingId)
+                .orElseThrow(() -> new RuntimeException("Pending ingredient not found"));
+
+        // Lấy thông tin admin
+        String adminId = jwtUtil.getUserIdFromToken(adminToken);
+        User admin = userRepository.findById(adminId)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        if (!"ADMIN".equalsIgnoreCase(admin.getRole()) && !"SUPERADMIN".equalsIgnoreCase(admin.getRole())) {
+            throw new RuntimeException("Không đủ quyền duyệt");
+        }
+
+        // Lấy bản ghi chính cần merge
+        Ingredient existing = findById(pending.getId()); // hoặc map theo một reference riêng
+
+        // Merge các field từ pending vào existing
+        existing.setMaterial(pending.getMaterial());
+        existing.setLoaiProtein(pending.getLoaiProtein());
+        existing.setCategory(pending.getCategory());
+        updateEntityFields(existing, toDTO(pending)); // nếu muốn merge tất cả field từ DTO
+        existing.setTrangThai(Ingredient.TrangThai.DA_DUYET);
+
+        // Xoá bản ghi pending sau khi duyệt
+        ingredientRepository.delete(pending);
+
+        return ingredientRepository.save(existing);
+    }
+
+    // Chuyển Ingredient sang DTO để dùng merge
+    private IngredientDTO toDTO(Ingredient ingredient) {
+        IngredientDTO dto = new IngredientDTO();
+        dto.setMaterial(ingredient.getMaterial());
+        dto.setLoaiProtein(ingredient.getLoaiProtein());
+        dto.setCategoryId(ingredient.getCategory().getId());
+        // set các field khác tương tự
+        return dto;
+    }
+
 
     private Ingredient toEntity(IngredientDTO dto, Category category, User user) {
         Ingredient ingredient = new Ingredient();
@@ -158,7 +187,7 @@ public class IngredientService {
         ingredient.setIsoflavoneTongSo(dto.getIsoflavoneTongSo());
         ingredient.setDaidzein(dto.getDaidzein());
         ingredient.setGenistein(dto.getGenistein());
-        ingredient.setGlycitein(dto.getGlycitein());
+        ingredient.setGlycetin(dto.getGlycetin());
         ingredient.setPurine(dto.getPurine());
         ingredient.setPalmitic(dto.getPalmitic());
         ingredient.setMargaric(dto.getMargaric());
@@ -166,7 +195,7 @@ public class IngredientService {
         ingredient.setArachidic(dto.getArachidic());
         ingredient.setBehenic(dto.getBehenic());
         ingredient.setLignoceric(dto.getLignoceric());
-        ingredient.setTsAxitBeoKhongNo1Noi(dto.getTsAxitBeoKhongNo1Noi());
+        ingredient.setTsAxitBeoKhongNo1NoiDoi(dto.getTsAxitBeoKhongNo1NoiDoi());
         ingredient.setMyristoleic(dto.getMyristoleic());
         ingredient.setPalmitoleic(dto.getPalmitoleic());
         ingredient.setOleic(dto.getOleic());
@@ -176,7 +205,7 @@ public class IngredientService {
         ingredient.setArachidonic(dto.getArachidonic());
         ingredient.setEpa(dto.getEpa());
         ingredient.setDha(dto.getDha());
-        ingredient.setTsAcidBeoTrans(dto.getTsAcidBeoTrans());
+        ingredient.setTsAxitBeoTrans(dto.getTsAxitBeoTrans());
         ingredient.setCholesterol(dto.getCholesterol());
         ingredient.setPhytosterol(dto.getPhytosterol());
         ingredient.setLysin(dto.getLysin());
