@@ -59,6 +59,10 @@ const Sidebar = ({ onNavigate }) => {
                             </button>
                             {expandedMenu === "du-lieu" && (
                                 <ul className={styles.nacList}>
+                                    <li className={styles["nav-link"]}>
+                                        <img src={getImage('category.svg')} alt="Món ăn" className={styles["nav-icon"]} />
+                                        <a href="#mon-an">Danh mục</a>
+                                    </li>
                                     <li className={styles["nav-link"]} onClick={() => onNavigate && onNavigate("nguyenlieu")}>
                                         <img src={getImage('nguyenlieu.svg')} alt="Nguyên liệu" className={styles["nav-icon"]} />
                                         <span>Nguyên liệu</span>

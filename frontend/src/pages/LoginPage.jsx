@@ -92,17 +92,24 @@ const LoginPage = () => {
 
           <div className={styles["divider"]}>Hoặc đăng nhập với</div>
           <div className={styles["social-login"]}>
-            
-            <button
-  className={`${styles["social-btn"]} ${styles["google"]}`}
-  onClick={() => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
-  }}
->
-  G
-</button>
 
-            <button className={`${styles["social-btn"]} ${styles["facebook"]}`}>f</button>
+            <button
+              className={`${styles["social-btn"]} ${styles["google"]}`}
+              onClick={() => {
+                window.location.href = "http://localhost:8080/oauth2/authorization/google";
+              }}
+            >
+              G
+            </button>
+            <button
+              className={`${styles["social-btn"]} ${styles["facebook"]}`}
+              onClick={() => {
+                window.location.href = "http://localhost:8080/oauth2/authorization/facebook";
+              }}
+            >
+              f
+            </button>
+
           </div>
 
           <p className={styles["signup"]}>
