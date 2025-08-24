@@ -16,15 +16,15 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/")
-    public ResponseEntity<?> insert(@RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity<Category> insert(@RequestBody CategoryDTO categoryDTO) {
         Category category = categoryService.insert(categoryDTO);
-        return ResponseEntity.ok("Thêm thành công "+category);
+        return ResponseEntity.ok(category); // ✅ trả về object Category dạng JSON
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
         Category category = categoryService.update(id, categoryDTO);
-        return ResponseEntity.ok("Sửa thành công "+category);
+        return ResponseEntity.ok(category); // ✅ trả về Category JSON
     }
 
     @GetMapping("/")
