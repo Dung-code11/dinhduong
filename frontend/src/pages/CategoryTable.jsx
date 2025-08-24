@@ -160,7 +160,6 @@ export default function CategoryTable() {
 
   if (changes.length > 0) {
     setChangedCells(changes);
-
     try {
       if (updatedRow.id) {
         // ✅ Có id thật -> Update
