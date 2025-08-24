@@ -56,17 +56,20 @@ export default function CategoryTable() {
 
       if (categories && Array.isArray(categories)) {
         const categoriesWithFakeId = categories.map((item, index) => ({
-          ...item,
-          fakeId: index + 1
+          id: item.id,                       // ✅ id thật từ backend
+          categoryName: item.categoryName,
+          fakeId: index + 1                  // ✅ id giả để render
         }));
         setTableData(categoriesWithFakeId);
       } else {
         const categoriesWithFakeId = sampleData.map((item, index) => ({
-          ...item,
+          id: item.id,
+          categoryName: item.categoryName,
           fakeId: index + 1
         }));
         setTableData(categoriesWithFakeId);
       }
+
 
       setError(null);
     } catch (err) {
@@ -142,52 +145,70 @@ export default function CategoryTable() {
   };
 
   const saveRow = async (rowIndex) => {
-    const updatedRow = tempData[rowIndex];
-    const originalRow = originalData[rowIndex] || {};
+  const updatedRow = tempData[rowIndex];
+  const originalRow = originalData[rowIndex] || {};
 
-    const changes = [];
-    if (updatedRow.categoryName !== originalRow.categoryName) {
-      changes.push({
-        row: originalRow.categoryName || "New Row",
-        col: "categoryName",
-        oldValue: originalRow.categoryName || "",
-        newValue: updatedRow.categoryName
-      });
-    }
+  const changes = [];
+  if (updatedRow.categoryName !== originalRow.categoryName) {
+    changes.push({
+      row: originalRow.categoryName || "New Row",
+      col: "categoryName",
+      oldValue: originalRow.categoryName || "",
+      newValue: updatedRow.categoryName
+    });
+  }
 
-    if (changes.length > 0) {
-      setChangedCells(changes);
+  if (changes.length > 0) {
+    setChangedCells(changes);
+    try {
+      if (updatedRow.id) {
+        // ✅ Có id thật -> Update
+        const response = await categoryAPI.updateCategory(updatedRow.id, { categoryName: updatedRow.categoryName });
+        const newRow = {
+          ...updatedRow,
+          id: response.data.id,         // id thật backend trả về
+          fakeId: updatedRow.fakeId
+        };
 
-      try {
-        if (updatedRow.id) {
-          // ✅ Có id thật -> Update
-          await categoryAPI.updateCategory(updatedRow.id, { categoryName: updatedRow.categoryName });
-          const newData = [...tableData];
-          newData[rowIndex] = { ...updatedRow };
-          setTableData(newData);
-        } else {
-          // ✅ Chưa có id thật -> Create mới
-          const response = await categoryAPI.createCategory({ categoryName: updatedRow.categoryName });
-          const newData = [...tableData];
-          newData[rowIndex] = { ...updatedRow, id: response.data }; // gán id thật trả về
-          setTableData(newData);
-        }
-        const freshData = await categoryAPI.getCategories();
-        setTableData(freshData.data);
-        setShowDialog(true);
-      } catch (err) {
-        setError("Lỗi khi lưu: " + (err.response?.data?.message || err.message));
-        console.error("Save error:", err);
+        const newData = [...tableData];
+        newData[rowIndex] = newRow;
+        setTableData(newData);
+        setOriginalData(prev => ({ ...prev, [rowIndex]: newRow }));
+        setTempData(prev => ({ ...prev, [rowIndex]: newRow }));
 
-        if (originalData[rowIndex]) {
-          const newData = [...tableData];
-          newData[rowIndex] = { ...originalData[rowIndex] };
-          setTableData(newData);
-        }
+      } else {
+        // ✅ Chưa có id thật -> Create mới
+        const response = await categoryAPI.createCategory({ categoryName: updatedRow.categoryName });
+        const newRow = {
+          ...updatedRow,
+          id: response.data.id,        // lấy id thật từ backend
+          fakeId: updatedRow.fakeId    // giữ nguyên fakeId
+        };
+
+        const newData = [...tableData];
+        newData[rowIndex] = newRow;
+        setTableData(newData);
+        setOriginalData(prev => ({ ...prev, [rowIndex]: newRow }));
+        setTempData(prev => ({ ...prev, [rowIndex]: newRow }));
+      }
+
+      setShowDialog(true);
+    } catch (err) {
+      setError("Lỗi khi lưu: " + (err.response?.data?.message || err.message));
+      console.error("Save error:", err);
+
+      if (originalData[rowIndex]) {
+        const newData = [...tableData];
+        newData[rowIndex] = { ...originalData[rowIndex] };
+        setTableData(newData);
       }
     }
-    setEditingRow(null);
-  };
+  }
+
+  setEditingRow(null);
+};
+
+
 
 
   const addRow = () => {
@@ -195,7 +216,7 @@ export default function CategoryTable() {
       ? Math.max(...tableData.map(item => item.fakeId || 0))
       : 0;
 
-    const newRow = { id: "", fakeId: maxFakeId + 1, categoryName: "" };
+    const newRow = { id: null, fakeId: maxFakeId + 1, categoryName: "" };
 
     setTableData(prev => {
       const newData = [...prev, newRow];
@@ -293,7 +314,7 @@ export default function CategoryTable() {
 
           {filteredData.map((row, rowIndex) => (
             <div
-              key={row.id || `new-${rowIndex}`}
+              key={row.id ? `id-${row.id}` : `fake-${row.fakeId}`}
               className={styles.tableRow}
               onDoubleClick={() => !editingRow && editRow(rowIndex)}
             >
