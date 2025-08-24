@@ -169,9 +169,11 @@ export default function CategoryTable() {
           // ✅ Chưa có id thật -> Create mới
           const response = await categoryAPI.createCategory({ categoryName: updatedRow.categoryName });
           const newData = [...tableData];
-          newData[rowIndex] = { ...updatedRow, id: response.data.id }; // gán id thật trả về
+          newData[rowIndex] = { ...updatedRow, id: response.data }; // gán id thật trả về
           setTableData(newData);
         }
+        const freshData = await categoryAPI.getCategories();
+        setTableData(freshData.data);
         setShowDialog(true);
       } catch (err) {
         setError("Lỗi khi lưu: " + (err.response?.data?.message || err.message));
