@@ -641,10 +641,10 @@ export default function FoodTable() {
             const rowData = { ...updatedTable[rowIndex] };
 
             // Merge các thay đổi từ tempDataState
-            Object.keys(tempDataState).forEach(cellKey => {
-                const { rowIndex: rIndex, colKey, newValue } = tempDataState[cellKey];
-                if (rIndex === rowIndex) {
-                    rowData[colKey] = newValue;
+            Object.keys(rowData).forEach(colKey => {
+                const cellKey = `${rowIndex}-${colKey}`;
+                if (tempDataState[cellKey] !== undefined) {
+                    rowData[colKey] = tempDataState[cellKey].newValue;
                 }
             });
 
