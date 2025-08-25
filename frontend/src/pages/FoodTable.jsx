@@ -30,7 +30,6 @@ const categoryAPI = {
     getCategories: () => API.get("superadmin/category/")
 };
 
-
 export default function FoodTable() {
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,7 +39,10 @@ export default function FoodTable() {
     const [changedCells, setChangedCells] = useState([]);
     const [showDialog, setShowDialog] = useState(false);
     const [tempDataState, setTempDataState] = useState({});
+    const [searchTerm, setSearchTerm] = useState("");
     const [openFilter, setOpenFilter] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectedCategory, setSelectedCategory] = useState("Nhóm");
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -49,23 +51,76 @@ export default function FoodTable() {
         proteinType: ""
     });
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const getPageNumbers = () => {
+        const pages = [];
+        const maxVisiblePages = 5; // Số trang tối đa hiển thị
+
+        if (totalPages <= maxVisiblePages) {
+            // Hiển thị tất cả trang nếu ít
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+        } else {
+            // Hiển thị trang đầu, cuối và trang xung quanh trang hiện tại
+            pages.push(1);
+
+            let startPage = Math.max(2, currentPage - 1);
+            let endPage = Math.min(totalPages - 1, currentPage + 1);
+
+            if (currentPage <= 3) {
+                endPage = 4;
+            } else if (currentPage >= totalPages - 2) {
+                startPage = totalPages - 3;
+            }
+
+            if (startPage > 2) {
+                pages.push('...');
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                pages.push(i);
+            }
+
+            if (endPage < totalPages - 1) {
+                pages.push('...');
+            }
+            pages.push(totalPages);
+        }
+
+        return pages;
+    };
 
     // Fetch data on component mount
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
+                await fetchCategories();
                 await fetchIngredients();
-                const res = await categoryAPI.getCategories();
-                setCategories(res.data);
             } catch (err) {
-                console.error("Fetch categories error:", err);
+                console.error("Fetch error:", err);
             } finally {
                 setLoading(false);
             }
         };
         fetchData();
     }, []);
+
+    // Hàm lấy danh mục từ API
+    const fetchCategories = async () => {
+        try {
+            const res = await categoryAPI.getCategories();
+            if (res.data && Array.isArray(res.data)) {
+                setCategories(res.data);
+            } else {
+                // Fallback data nếu API không trả về dữ liệu
+                console.log("Dữ liệu bị thất lạc")
+            }
+        } catch (err) {
+            console.error("Fetch categories error:", err);
+        }
+    };
+
     // Hàm tính toán các giá trị phụ thuộc
     const calculateCarbohydrate = (item) => {
         return 100 - ((item.water || 0) + (item.protein || 0) + (item.fat || 0) + (item.ash || 0));
@@ -90,14 +145,14 @@ export default function FoodTable() {
     const calculateG = (item) => {
         return calculateCarbohydrate(item) * calculateEnergy(item) / 100;
     };
+
     const fetchIngredients = async () => {
         try {
             setLoading(true);
             const response = await ingredientAPI.getIngredients();
-            // console.log("API Response:", response.data);
 
             // Chuyển đổi dữ liệu từ API sang định dạng component mong đợi
-            const convertedData = response.data.map(item => ({
+            const convertedData = response.data.content.map(item => ({
                 id: item.id,
                 name: item.material,
                 group: item.category?.categoryName || "",
@@ -188,7 +243,6 @@ export default function FoodTable() {
                 G: calculateG(item),
                 "Vitamin A -RAE": null // Có thể tính toán sau nếu cần
             }));
-
             setTableData(convertedData);
             setError(null);
         } catch (err) {
@@ -200,14 +254,10 @@ export default function FoodTable() {
     };
 
     const convertToApiFormat = (componentData) => {
-        console.log("DEBUG group:", componentData.group);
-        console.log("DEBUG categories:", categories.map(c => c.categoryName));
-
         const categoryObj = categories.find(c => c.categoryName === componentData.group);
-        console.log("DEBUG matched:", categoryObj);
         return {
             material: componentData.name,
-            categoryId: categoryObj ? categoryObj.id : null, // gửi id
+            categoryId: categoryObj ? categoryObj.id : null,
             loaiProtein: componentData.proteinType === "Thực vật" ? "THUC_VAT" : "DONG_VAT",
             edible: componentData.Edible,
             water: componentData.Water,
@@ -289,14 +339,6 @@ export default function FoodTable() {
         };
     };
 
-    const foodCategories = [
-        { group: "Ngũ cốc", className: "ngucoc" },
-        { group: "Rau", className: "rau" },
-        { group: "Trái cây", className: "traicay" },
-        { group: "Thịt", className: "thit" },
-        { group: "Hải sản", className: "haisan" },
-    ];
-
     const groupClassMap = {
         "Ngũ cốc và sản phẩm chế biến": styles.ngucoc,
         "Khoai củ và sản phẩm chế biến": styles.khoaicu,
@@ -312,7 +354,7 @@ export default function FoodTable() {
         "Đồ ngọt (đường, bánh, mứt, kẹo)": styles.dongot,
         "Gia vị, nước chấm": styles.gia_vi,
         "Nước giải khát": styles.nuocgiaikhat,
-        "Thức ăn truyền thống": styles.truyenthong
+        "Đồ ăn truyền thống": styles.truyenthong
     };
 
     // Load toàn bộ ảnh trong thư mục assets/images
@@ -321,15 +363,15 @@ export default function FoodTable() {
 
     const columns = [
         { key: "Edible", label: "Edible (%)" },
-        { key: "Energy", label: "Energy (Kcal)" }, // 4*Protein + 9*Fat+ 4*Carbohydrate
-        { key: "E", label: "E" },// Edible * Energy/100
+        { key: "Energy", label: "Energy (Kcal)" },
+        { key: "E", label: "E" },
         { key: "Water", label: "Water (g)" },
         { key: "Protein", label: "Protein (g)" },
-        { key: "P", label: "P" },// Protein * Energy/100
+        { key: "P", label: "P" },
         { key: "Fat", label: "Fat (g)" },
-        { key: "L", label: "L" }, //Fat * Energy/100
-        { key: "Carbohydrate", label: "Carbohydrate (g)" },//100 - Sum(Water+Protein+Fat+Ash)
-        { key: "G", label: "G" }, //Carbohydrate * Energy/100
+        { key: "L", label: "L" },
+        { key: "Carbohydrate", label: "Carbohydrate (g)" },
+        { key: "G", label: "G" },
         { key: "Fiber", label: "Fiber (g)" },
         { key: "Ash", label: "Ash (g)" },
         { key: "Calci", label: "Calci (mg)" },
@@ -353,7 +395,7 @@ export default function FoodTable() {
         { key: "Biotin", label: "Biotin (µg)" },
         { key: "Vitamin B12", label: "Vitamin B12 (µg)" },
         { key: "Retinol", label: "Retinol (µg)" },
-        { key: "Vitamin A -RAE", label: "Vitamin A -RAE (µg)" },//Retinol + b-carotene/12 + a-carotene/24 + b-cryptoxanthin/24
+        { key: "Vitamin A -RAE", label: "Vitamin A -RAE (µg)" },
         { key: "Vitamin D", label: "Vitamin D (µg)" },
         { key: "Vitamin E", label: "Vitamin E (mg)" },
         { key: "Vitamin K", label: "Vitamin K (µg)" },
@@ -406,24 +448,9 @@ export default function FoodTable() {
         { key: "Proline", label: "Proline (mg)" },
         { key: "Serine", label: "Serine (mg)" }
     ];
-    const groupOptions = [
-        "Nhóm",
-        "Ngũ cốc và sản phẩm chế biến",
-        "Khoai củ và sản phẩm chế biến",
-        "Hạt, quả, giàu đạm, béo và sản phẩm chế biến",
-        "Rau, quả, củ dùng làm rau",
-        "Quả chín",
-        "Dầu, mỡ, bơ",
-        "Thịt và sản phẩm chế biến",
-        "Thủy sản và sản phẩm chế biến",
-        "Trứng và sản phẩm chế biến",
-        "Sữa và sản phẩm chế biến",
-        "Đồ hộp",
-        "Đồ ngọt (đường, bánh, mứt, kẹo)",
-        "Gia vị, nước chấm",
-        "Nước giải khát",
-        "Thức ăn truyền thống"
-    ];
+
+    // Tạo danh sách nhóm từ categories
+    const groupOptions = ["Nhóm", ...categories.map(c => c.categoryName)];
 
     const proteinTypeOptions = [
         "Nhóm Protein", "Thực vật", "Động Vật"
@@ -458,7 +485,9 @@ export default function FoodTable() {
             }
         }
     };
-
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+    };
     const handleFilterChange = (filterType, value) => {
         setFilterValues(prev => ({
             ...prev,
@@ -481,9 +510,17 @@ export default function FoodTable() {
     const filteredData = tableData.filter(row => {
         return (
             (filterValues.group === "" || row.group === filterValues.group) &&
-            (filterValues.proteinType === "" || row.proteinType === filterValues.proteinType)
+            (filterValues.proteinType === "" || row.proteinType === filterValues.proteinType) &&
+            (searchTerm === "" || row.name.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     });
+
+    const getPaginatedData = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return filteredData.slice(startIndex, endIndex);
+    };
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
     const handleChange = (e, rowIndex, colKey) => {
         const value = e.target.value;
@@ -494,97 +531,157 @@ export default function FoodTable() {
         }));
     };
 
+    const addRow = () => {
+        const newRow = {
+            id: null,
+            name: "",
+            group: categories.length > 0 ? categories[0].categoryName : "",
+            proteinType: "Thực vật",
+            Edible: "",
+            Water: "",
+            Protein: "",
+            Fat: "",
+            Fiber: "",
+            Ash: "",
+            Calci: "",
+            Phosphorous: "",
+            Iron: "",
+            Zinc: "",
+            Sodium: "",
+            Potassium: "",
+            Magnesium: "",
+            Manganese: "",
+            Copper: "",
+            Selenium: "",
+            "Vitamin C": "",
+            Thiamine: "",
+            Riboflavin: "",
+            Niacin: "",
+            "Pantothenic acid": "",
+            "Vitamin B6": "",
+            Folate: "",
+            "Folic acid": "",
+            Biotin: "",
+            "Vitamin B12": "",
+            Retinol: "",
+            "Vitamin D": "",
+            "Vitamin E": "",
+            "Vitamin K": "",
+            "b-carotene": "",
+            "a-carotene": "",
+            "b-cryptoxanthin": "",
+            Lycopene: "",
+            "Lutein + zeaxanthin": "",
+            "Isoflavone tổng số": "",
+            Daidzein: "",
+            Genistein: "",
+            Glycetin: "",
+            Purine: "",
+            "Palmitic (C16:0)": "",
+            "Margaric (C17:0)": "",
+            "Stearic (C18:0)": "",
+            "Arachidic (C20:0)": "",
+            "Behenic (C22:0)": "",
+            "Lignoceric (C24:0)": "",
+            "TS acid béo không no 1 nối đôi": "",
+            "Myristoleic (C14:1)": "",
+            "Palmitoleic (C16:1)": "",
+            "Oleic (C18:1)": "",
+            "TS acid béo không no nhiều nối đôi": "",
+            Linoleic: "",
+            Linolenic: "",
+            "Arachidonic (C20:4)": "",
+            "EPA (C20:5 n3)": "",
+            "DHA (C22:6 n3)": "",
+            "TS acid béo trans": "",
+            Cholesterol: "",
+            Phytosterol: "",
+            Lysin: "",
+            Methionin: "",
+            Tryptophan: "",
+            Phenylalanin: "",
+            Threonin: "",
+            Valine: "",
+            Leucine: "",
+            Isoleucine: "",
+            Arginine: "",
+            Histidine: "",
+            Cystine: "",
+            Tyrosine: "",
+            Alanine: "",
+            "Aspartic acid": "",
+            "Glutamic acid": "",
+            Glycine: "",
+            Proline: "",
+            Serine: "",
+            // Các trường tính toán sẽ tự động tính
+            Carbohydrate: 0,
+            Energy: 0,
+            E: 0,
+            P: 0,
+            L: 0,
+            G: 0,
+            "Vitamin A -RAE": null
+        };
+
+        setTableData(prev => {
+            const updated = [...prev, newRow];
+            // Đặt hàng mới vào chế độ edit
+            setEditingRow(updated.length - 1);
+            // Cập nhật originalData với dữ liệu mới
+            setOriginalData(prevOriginal => [...prevOriginal, { ...newRow }]);
+            return updated;
+        });
+    };
+
+    // Sửa hàm handleKeyDown để xử lý đúng khi thêm mới
     const handleKeyDown = async (e, rowIndex) => {
         if (e.key === "Enter") {
             const updatedTable = [...tableData];
+            const rowData = { ...updatedTable[rowIndex] };
 
-            // Chỉ xử lý các cell thuộc về row đang edit
+            // Merge các thay đổi từ tempDataState
             Object.keys(tempDataState).forEach(cellKey => {
                 const { rowIndex: rIndex, colKey, newValue } = tempDataState[cellKey];
-
-                // Kiểm tra xem rIndex có hợp lệ không
-                if (rIndex >= 0 && rIndex < updatedTable.length) {
-                    // Kiểm tra xem colKey có tồn tại trong row không
-                    if (updatedTable[rIndex] && colKey in updatedTable[rIndex]) {
-                        updatedTable[rIndex][colKey] = newValue;
-                    } else {
-                        console.warn(`Column key "${colKey}" không tồn tại trong row ${rIndex}`);
-                    }
-                } else {
-                    console.warn(`Row index ${rIndex} không hợp lệ`);
+                if (rIndex === rowIndex) {
+                    rowData[colKey] = newValue;
                 }
             });
 
-            let changes = [];
-            // Chỉ kiểm tra changes cho row đang edit
-            const oldRow = originalData[rowIndex] || {};
-            const newRow = updatedTable[rowIndex] || {};
-
-            Object.keys(newRow).forEach(key => {
-                if (newRow[key] !== oldRow[key]) {
-                    changes.push({
-                        row: oldRow.name || "New Row",
-                        col: key,
-                        oldValue: oldRow[key] ?? "",
-                        newValue: newRow[key] ?? ""
-                    });
-                }
-            });
-
-            if (changes.length > 0) {
-                setChangedCells(changes);
-
-                // Save changes to API
-                try {
-                    const rowData = updatedTable[rowIndex];
-                    if (rowData.id) {
-                        // Update existing - cần chuyển đổi sang định dạng API
-                        const apiData = convertToApiFormat(rowData);
-                        await ingredientAPI.updateIngredient(rowData.id, apiData);
-                    } else {
-                        // Create new - cần chuyển đổi sang định dạng API
-                        const apiData = convertToApiFormat(rowData);
-                        const response = await ingredientAPI.createIngredient(apiData);
-                        // Cập nhật với dữ liệu từ server (có id)
-                        updatedTable[rowIndex] = convertFromApiFormat(response.data);
-                    }
-                    setTableData(updatedTable);
-                } catch (err) {
-                    setError("Lỗi khi lưu: " + (err.response?.data?.message || err.message));
-                    console.error("Save error:", err);
-                    // Revert to original data
-                    setTableData(originalData);
-                }
-                setShowDialog(true);
+            // Cập nhật giá trị name nếu đang edit
+            if (e.target.tagName === "INPUT" && e.target.name === "name") {
+                rowData.name = e.target.value.trim();
             }
-            setEditingRow(null);
+
+            try {
+                const apiData = convertToApiFormat(rowData);
+
+                if (!rowData.id) {
+                    // Thêm mới
+                    const response = await ingredientAPI.createIngredient(apiData);
+                    rowData.id = response.data.id; // Gán ID mới từ server
+                } else {
+                    // Cập nhật
+                    await ingredientAPI.updateIngredient(rowData.id, apiData);
+                }
+
+                // Cập nhật state
+                updatedTable[rowIndex] = rowData;
+                setTableData(updatedTable);
+                setOriginalData(updatedTable.map(r => ({ ...r })));
+                setEditingRow(null);
+                setTempDataState({});
+
+            } catch (err) {
+                setError("Lỗi khi lưu: " + (err.response?.data?.message || err.message));
+                console.error("Save error:", err);
+                // Khôi phục lại dữ liệu gốc nếu có lỗi
+                setTableData([...originalData]);
+            }
         }
     };
-    const addRow = () => {
-        const newRow = {
-            name: "",
-            group: categories.length > 0 ? categories[0].categoryName : "",
-            proteinType: proteinTypeOptions[0],
-            Edible: "",
-            Energy: "",
-            E: "",
-            Water: ""
-        };
-        setTableData(prev => [...prev, newRow]);
-        setEditingRow(tableData.length);
-    };
-
-    const columnGroups = [
-        // ... (giữ nguyên columnGroups)
-    ];
-
-    const [visibleColumns, setVisibleColumns] = useState(
-        columnGroups.flatMap(group => group.columns.map(col => col.key))
-    );
-
     if (loading) return <div className={styles.loading}>Đang tải dữ liệu...</div>;
     if (error) return <div className={styles.error}>{error}</div>;
-
     return (
         <div>
             {/* Header */}
@@ -620,7 +717,12 @@ export default function FoodTable() {
             <div className={styles.widgetControls}>
                 <div className={styles.controlsLeft}>
                     <div className={styles.searchInput}>
-                        <input type="text" placeholder="Tìm kiếm..." />
+                        <input
+                            type="text"
+                            placeholder="Tìm kiếm..."
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
                     </div>
 
                     <div className={styles.filterWrapper}>
@@ -756,6 +858,60 @@ export default function FoodTable() {
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className={styles.paginationWrapper}>
+                <div className={styles.paginationInfo}>
+                    Hiển thị {Math.min((currentPage - 1) * itemsPerPage + 1, filteredData.length)}-
+                    {Math.min(currentPage * itemsPerPage, filteredData.length)} của {filteredData.length} mục
+                </div>
+
+                <div className={styles.paginationControls}>
+                    <button
+                        className={styles.pageButton}
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        ‹
+                    </button>
+
+                    {getPageNumbers().map((pageNum, index) => (
+                        pageNum === '...' ? (
+                            <span key={`dots-${index}`} className={styles.pageDots}>...</span>
+                        ) : (
+                            <button
+                                key={pageNum}
+                                className={`${styles.pageButton} ${currentPage === pageNum ? styles.pageActive : ''}`}
+                                onClick={() => setCurrentPage(pageNum)}
+                            >
+                                {pageNum}
+                            </button>
+                        )
+                    ))}
+
+                    <button
+                        className={styles.pageButton}
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    >
+                        ›
+                    </button>
+                </div>
+
+                {/* <div className={styles.itemsPerPageSelector}>
+                        <label>Số mỗi trang:</label>
+                        <select
+                            value={itemsPerPage}
+                            onChange={(e) => {
+                                setItemsPerPage(Number(e.target.value));
+                                setCurrentPage(1); // Reset về trang đầu khi thay đổi số item mỗi trang
+                            }}
+                        >
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={50}>50</option>
+                        </select>
+                    </div> */}
             </div>
 
             {showDialog && (

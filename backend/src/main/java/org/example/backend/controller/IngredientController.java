@@ -22,9 +22,15 @@ public class IngredientController {
         return ResponseEntity.ok(created);
     }
 
+    //    @GetMapping
+//    public ResponseEntity<List<Ingredient>> findAll() {
+//        return ResponseEntity.ok(ingredientService.findAll());
+//    }
     @GetMapping
-    public ResponseEntity<List<Ingredient>> findAll() {
-        return ResponseEntity.ok(ingredientService.findAll());
+    public ResponseEntity<?> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(ingredientService.findAll(page, size));
     }
 
     @GetMapping("/{id}")
