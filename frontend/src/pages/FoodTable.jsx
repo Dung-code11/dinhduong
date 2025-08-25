@@ -638,20 +638,21 @@ export default function FoodTable() {
     const handleKeyDown = async (e, rowIndex) => {
         if (e.key === "Enter") {
             const updatedTable = [...tableData];
-            const rowData = { ...updatedTable[rowIndex] };
 
-            // Merge các thay đổi từ tempDataState
+            // lấy row hiện tại
+            let rowData = { ...updatedTable[rowIndex] };
+
+            // ghi đè bằng giá trị mới trong tempDataState
             Object.keys(rowData).forEach(colKey => {
                 const cellKey = `${rowIndex}-${colKey}`;
                 if (tempDataState[cellKey] !== undefined) {
                     rowData[colKey] = tempDataState[cellKey].newValue;
                 }
             });
-
             // Cập nhật giá trị name nếu đang edit
-            if (e.target.tagName === "INPUT" && e.target.name === "name") {
-                rowData.name = e.target.value.trim();
-            }
+            // if (e.target.tagName === "INPUT" && e.target.name === "name") {
+            //     rowData.name = e.target.value.trim();
+            // }
 
             try {
                 const apiData = convertToApiFormat(rowData);
@@ -805,6 +806,7 @@ export default function FoodTable() {
                             <div className={styles.tableCell}>
                                 {editingRow === rowIndex ? (
                                     <input
+                                        name="name"
                                         value={tempDataState[`${rowIndex}-name`]?.newValue ?? row.name}
                                         onChange={e => handleChange(e, rowIndex, "name")}
                                         onKeyDown={e => handleKeyDown(e, rowIndex)}
