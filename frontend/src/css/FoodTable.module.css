@@ -402,12 +402,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   margin-top: 16px;
 }
 
 .pageButton {
-  min-width: 32px;
+  width: 32px;
   height: 32px;
   border-radius: 8px;
   border: none;
@@ -417,6 +417,14 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageButton img {
+  width: 10px;
+  height: 16px;
 }
 
 .pageButton:hover:not(:disabled) {
@@ -437,5 +445,10 @@
   font-size: 13px;
   color: var(--color-text-secondary);
   padding: 0 4px;
+}
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;  /* khoảng cách giữa các nút */
 }
 
